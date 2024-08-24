@@ -22,7 +22,9 @@ import jakarta.validation.constraints.Size;
 @Table(name="Cliente")
 public class Cliente extends Persona{
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idCliente;
 
     @NotBlank
     @Column(name = "clienteid", unique = true)
