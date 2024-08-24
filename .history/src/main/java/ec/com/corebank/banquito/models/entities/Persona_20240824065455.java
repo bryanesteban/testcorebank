@@ -14,8 +14,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
@@ -30,7 +28,7 @@ public class Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPersona;
+    private Long id;
 
     @NotBlank
     @Column(name = "nombre")
@@ -44,6 +42,7 @@ public class Persona {
 
     @NotBlank
     @Column(name = "Edad")
+    @Size(min = 4, max = 20)
     private int Edad;
 
 
@@ -68,15 +67,13 @@ public class Persona {
 
 
     public Persona(
-        Long idPersona,
         @NotBlank @Size(min = 4, max = 30) String nombre,
         @NotBlank @Size(min = 4, max = 20) String genero,
-        @NotBlank int edad,
+        @NotBlank @Size(min = 4, max = 20) int edad,
         @NotBlank @Size(min = 4, max = 20) String identificacion,
         @NotBlank @Size(min = 4, max = 60) String direccion,
         @NotBlank @Size(min = 4, max = 60) String telefono) {
         
-        this.idPersona = idPersona;
         this.nombre = nombre;
         this.genero = genero;
         Edad = edad;
@@ -87,12 +84,12 @@ public class Persona {
 
 
     public Long getId() {
-        return idPersona;
+        return id;
     }
 
 
-    public void setId(Long idPersona) {
-        this.idPersona = idPersona;
+    public void setId(Long id) {
+        this.id = id;
     }
 
 
@@ -158,8 +155,13 @@ public class Persona {
 
 
 
-    @OneToOne(mappedBy = "persona")
-    private Cliente cliente;
+    // @ManyToMany
+    // @JoinTable(
+    //     name = "users_roles",
+    //     joinColumns = @JoinColumn (name="user_id"),
+    //     inverseJoinColumns = @JoinColumn(name="role_id"),
+    //     uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_id"})})
+   
 
 
 }

@@ -15,7 +15,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
@@ -44,6 +43,7 @@ public class Persona {
 
     @NotBlank
     @Column(name = "Edad")
+    @Size(min = 4, max = 20)
     private int Edad;
 
 
@@ -71,7 +71,7 @@ public class Persona {
         Long idPersona,
         @NotBlank @Size(min = 4, max = 30) String nombre,
         @NotBlank @Size(min = 4, max = 20) String genero,
-        @NotBlank int edad,
+        @NotBlank @Size(min = 4, max = 20) int edad,
         @NotBlank @Size(min = 4, max = 20) String identificacion,
         @NotBlank @Size(min = 4, max = 60) String direccion,
         @NotBlank @Size(min = 4, max = 60) String telefono) {
@@ -158,8 +158,13 @@ public class Persona {
 
 
 
-    @OneToOne(mappedBy = "persona")
-    private Cliente cliente;
+    @OneToMany
+    @JoinTable(
+        name = "persona_cliente",
+        joinColumns = @JoinColumn (name="idPersona"),
+        inverseJoinColumns = @JoinColumn(name="idCliente"),
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"idPersona", "idCliente"})})
+   
 
 
 }

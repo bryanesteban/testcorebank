@@ -158,8 +158,14 @@ public class Persona {
 
 
 
-    @OneToOne(mappedBy = "persona")
-    private Cliente cliente;
+    @OneToOne
+    @JoinTable(
+        name = "persona_cliente",
+        joinColumns = @JoinColumn (name="idPersona"),
+        inverseJoinColumns = @JoinColumn(name="idCliente"),
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"idPersona", "idCliente"})}
+    )
+    private List<Cliente> clientes; 
 
 
 }

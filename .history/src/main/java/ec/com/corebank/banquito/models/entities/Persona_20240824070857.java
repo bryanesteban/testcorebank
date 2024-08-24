@@ -15,7 +15,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
@@ -158,8 +157,14 @@ public class Persona {
 
 
 
-    @OneToOne(mappedBy = "persona")
-    private Cliente cliente;
+    @OneToMany
+    @JoinTable(
+        name = "persona_cliente",
+        joinColumns = @JoinColumn (name="idPersona"),
+        inverseJoinColumns = @JoinColumn(name="idCliente"),
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"idPersona", "idCliente"})}
+    )
+   
 
 
 }
