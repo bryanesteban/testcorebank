@@ -89,18 +89,6 @@ public class ClienteDTO {
 
     }
 
-    public static ClienteDTO build(Cliente cliente){
-
-        if( cliente == null){
-            throw new RuntimeException("Debe pasar el entity Cliente!");
-        }
-
-        return new  ClienteDTO(cliente.getClienteid(),
-                               cliente.getContrasena(),
-                               cliente.getEstado());
-
-    }
-
     
 
 }

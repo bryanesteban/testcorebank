@@ -1,6 +1,5 @@
 package ec.com.corebank.banquito.models.DTO;
 
-import ec.com.corebank.banquito.models.entities.Cliente;
 import ec.com.corebank.banquito.models.entities.Persona;
 
 public class ClienteDTO {
@@ -74,31 +73,6 @@ public class ClienteDTO {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
-    }
-
-    public static ClienteDTO build(Cliente cliente, Persona persona){
-
-        if( cliente == null){
-            throw new RuntimeException("Debe pasar el entity Cliente!");
-        }
-
-        return new  ClienteDTO(cliente.getClienteid(),
-                               cliente.getContrasena(),
-                               cliente.getEstado(),
-                               persona);
-
-    }
-
-    public static ClienteDTO build(Cliente cliente){
-
-        if( cliente == null){
-            throw new RuntimeException("Debe pasar el entity Cliente!");
-        }
-
-        return new  ClienteDTO(cliente.getClienteid(),
-                               cliente.getContrasena(),
-                               cliente.getEstado());
-
     }
 
     

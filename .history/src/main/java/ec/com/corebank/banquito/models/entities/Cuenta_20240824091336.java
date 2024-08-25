@@ -4,7 +4,6 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -19,7 +18,6 @@ import jakarta.validation.constraints.Size;
 public class Cuenta {
 
 
-    @Id
     @NotBlank
     @Column(name = "numeroCuenta", unique = true)
     @Size(min = 4, max = 30)

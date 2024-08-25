@@ -10,8 +10,7 @@ import ec.com.corebank.banquito.models.entities.Cliente;
 public interface ClienteRepository 
     extends CrudRepository<Cliente,Long>{
 
-        List <Cliente> findByEstadoTrue();
+        List <Cliente> findByStatusTrue();
         Optional<Cliente>  findByClienteid(String clienteid);
-        
 
 }

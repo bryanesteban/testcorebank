@@ -12,6 +12,5 @@ public interface ClienteRepository
 
         List <Cliente> findByEstadoTrue();
         Optional<Cliente>  findByClienteid(String clienteid);
-        
 
 }

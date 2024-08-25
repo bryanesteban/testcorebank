@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -18,8 +20,11 @@ import jakarta.validation.constraints.Size;
 @Table(name="Cuenta")
 public class Cuenta {
 
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idCuenta;
+
+
     @NotBlank
     @Column(name = "numeroCuenta", unique = true)
     @Size(min = 4, max = 30)
