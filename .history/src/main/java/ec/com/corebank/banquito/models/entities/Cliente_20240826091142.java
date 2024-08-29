@@ -2,7 +2,9 @@ package ec.com.corebank.banquito.models.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,6 +13,7 @@ import jakarta.validation.constraints.Size;
 @Table(name = "Cliente")
 public class Cliente extends Persona {
 
+    @Id
     @NotBlank
     @Column(name = "clienteid", unique = true)
     @Size(min = 4, max = 20)
@@ -29,6 +32,7 @@ public class Cliente extends Persona {
     }
 
     public Cliente(
+        Long idPersona,
         @NotBlank @Size(min = 4, max = 30) String nombre,
         @NotBlank @Size(min = 4, max = 20) String genero,
         @NotBlank int edad,
@@ -39,7 +43,7 @@ public class Cliente extends Persona {
         @NotBlank @Size(min = 4, max = 30) String contrasena,
         @NotBlank Boolean estado) {
 
-        super(nombre, genero, edad, identificacion, direccion, telefono);
+        super(idPersona, nombre, genero, edad, identificacion, direccion, telefono);
         this.clienteid = clienteid;
         this.contrasena = contrasena;
         this.estado = estado;

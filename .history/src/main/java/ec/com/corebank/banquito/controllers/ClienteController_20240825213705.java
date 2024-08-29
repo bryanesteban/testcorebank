@@ -49,7 +49,6 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<ClienteDTO> createCliente(@RequestBody Cliente cliente, BindingResult result) {
         try {
-            System.out.println("cliente:"+cliente);
             ClienteDTO savedCliente = clienteService.saveClient(cliente);
             return new ResponseEntity<>(savedCliente, HttpStatus.CREATED);
         } catch (Exception e) {

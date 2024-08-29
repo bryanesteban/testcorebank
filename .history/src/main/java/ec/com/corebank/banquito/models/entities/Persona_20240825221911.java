@@ -5,20 +5,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Persona")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idpersona")
+    @Column(name = "idPersona")
     private Long idPersona;
 
     @NotBlank
@@ -31,7 +28,7 @@ public class Persona {
     @Size(min = 4, max = 20)
     private String genero;
 
-
+    @NotBlank
     @Column(name = "edad")
     private int edad;
 
@@ -54,6 +51,7 @@ public class Persona {
     }
 
     public Persona(
+        Long idPersona,
         @NotBlank @Size(min = 4, max = 30) String nombre,
         @NotBlank @Size(min = 4, max = 20) String genero,
         @NotBlank int edad,
@@ -61,6 +59,7 @@ public class Persona {
         @NotBlank @Size(min = 4, max = 60) String direccion,
         @NotBlank @Size(min = 4, max = 60) String telefono) {
 
+        this.idPersona = idPersona;
         this.nombre = nombre;
         this.genero = genero;
         this.edad = edad;

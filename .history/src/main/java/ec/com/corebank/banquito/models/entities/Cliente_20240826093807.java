@@ -2,7 +2,8 @@ package ec.com.corebank.banquito.models.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -29,6 +30,7 @@ public class Cliente extends Persona {
     }
 
     public Cliente(
+        Long idPersona,
         @NotBlank @Size(min = 4, max = 30) String nombre,
         @NotBlank @Size(min = 4, max = 20) String genero,
         @NotBlank int edad,
