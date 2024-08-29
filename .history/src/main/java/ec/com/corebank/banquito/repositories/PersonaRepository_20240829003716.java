@@ -9,5 +9,5 @@ import ec.com.corebank.banquito.models.entities.Persona;
 public interface PersonaRepository 
     extends CrudRepository<Persona,Long>{
 
-        Optional<Persona> findByIdentificacion(String identificacion);
+        Optional<Persona> findByIdentification(String identification);
 }

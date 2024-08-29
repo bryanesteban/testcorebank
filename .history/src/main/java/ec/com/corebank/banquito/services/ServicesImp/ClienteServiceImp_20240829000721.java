@@ -66,23 +66,20 @@ public class ClienteServiceImp implements ClienteServInterface {
     @Override
     @Transactional
     public ClienteDTO saveClient(Cliente cliente) {
+        System.out.println("nombre:"+cliente.getNombre());
         try {
-            Optional <Persona> personaValidation = personaRepository.findByIdentificacion(cliente.getIdentificacion());
-            if(!personaValidation.isPresent()){
-                Persona persona = new Persona(
-                        cliente.getNombre(),
-                        cliente.getGenero(),
-                        cliente.getEdad(),
-                        cliente.getIdentificacion(),
-                        cliente.getDireccion(),
-                        cliente.getTelefono()
-                );
-                
-                persona = personaRepository.save(persona);
-                cliente.setPersona(persona);
-                return ClienteDTO.build(clienteRepository.save(cliente));
-            }
-            return null;
+            Persona persona = new Persona(
+                    cliente.getNombre(),
+                    cliente.getGenero(),
+                    cliente.getEdad(),
+                    cliente.getIdentificacion(),
+                    cliente.getDireccion(),
+                    cliente.getTelefono()
+            );
+            
+            persona = personaRepository.save(persona);
+            //cliente.setPersona(persona);
+            return ClienteDTO.build(clienteRepository.save(cliente));
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error al guardar el cliente: " + e.getMessage());

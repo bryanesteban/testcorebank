@@ -2,8 +2,7 @@ package ec.com.corebank.banquito.models.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,8 +25,6 @@ public class Cliente extends Persona {
     @Column(name = "estado")
     private Boolean estado;
 
-    @OneToOne
-    @JoinColumn(name = "IDPERSONA", referencedColumnName = "IDPERSONA")
     private Persona persona;
 
     

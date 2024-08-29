@@ -67,7 +67,7 @@ public class ClienteServiceImp implements ClienteServInterface {
     @Transactional
     public ClienteDTO saveClient(Cliente cliente) {
         try {
-            Optional <Persona> personaValidation = personaRepository.findByIdentificacion(cliente.getIdentificacion());
+            Optional <Persona> personaValidation = personaRepository.findByIdentification(cliente.getIdentificacion());
             if(!personaValidation.isPresent()){
                 Persona persona = new Persona(
                         cliente.getNombre(),
@@ -82,7 +82,6 @@ public class ClienteServiceImp implements ClienteServInterface {
                 cliente.setPersona(persona);
                 return ClienteDTO.build(clienteRepository.save(cliente));
             }
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error al guardar el cliente: " + e.getMessage());

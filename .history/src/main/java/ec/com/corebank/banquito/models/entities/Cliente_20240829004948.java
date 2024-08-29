@@ -27,7 +27,7 @@ public class Cliente extends Persona {
     private Boolean estado;
 
     @OneToOne
-    @JoinColumn(name = "IDPERSONA", referencedColumnName = "IDPERSONA")
+    @JoinColumn(name = "idPersona", referencedColumnName = "id_persona")
     private Persona persona;
 
     
