@@ -20,7 +20,8 @@ public class ClienteDTO {
 
 
 
-    public ClienteDTO(String identificacion, String nombre, String direccion, String telefono, String contrasena, Boolean estado) {
+    public ClienteDTO(String identificacion, String nombre, String direccion, String telefono, String contrasena,
+            Boolean estado) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -111,12 +112,12 @@ public class ClienteDTO {
             throw new RuntimeException("Debe pasar el entity Cliente!");
         }
 
-        return new ClienteDTO(cliente.getIdentificacion(),
-                              cliente.getNombre(),
-                              cliente.getDireccion(),
-                              cliente.getTelefono(),
-                              cliente.getContrasena(),
-                              cliente.getEstado());
+        return new  ClienteDTO(cliente.getIdentificacion(),
+                                cliente.getNombre(),
+                                cliente.getDireccion(),
+                                cliente.getTelefono(),
+                                cliente.getContrasena(),
+                                cliente.getEstado());
 
     }
 

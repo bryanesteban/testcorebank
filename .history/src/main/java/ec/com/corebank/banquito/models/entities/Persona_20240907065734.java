@@ -26,7 +26,7 @@ public class Persona {
     @Size(min = 4, max = 50)
     private String nombre;
 
-
+    @NotBlank
     @Column(name = "genero")
     @Size(min = 4, max = 20)
     private String genero;

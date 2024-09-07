@@ -70,7 +70,18 @@ public class ClienteServiceImp implements ClienteServInterface {
             Optional <Persona> personaValidation = personaRepository.findByIdentificacion(cliente.getIdentificacion());
             
             if(!personaValidation.isPresent()){
+                Persona persona = new Persona(
+                        cliente.getNombre(),
+                        cliente.getGenero(),
+                        cliente.getEdad(),
+                        cliente.getIdentificacion(),
+                        cliente.getDireccion(),
+                        cliente.getTelefono()
+                );
                 
+                // persona = personaRepository.save(persona);
+                // cliente.setPersona(persona);
+
                 return ClienteDTO.build(clienteRepository.save(cliente));
             }
             return null;

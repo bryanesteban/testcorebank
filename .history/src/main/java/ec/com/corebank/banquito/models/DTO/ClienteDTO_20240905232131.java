@@ -1,6 +1,7 @@
 package ec.com.corebank.banquito.models.DTO;
 
 import ec.com.corebank.banquito.models.entities.Cliente;
+import ec.com.corebank.banquito.models.entities.Persona;
 
 public class ClienteDTO {
 
@@ -20,7 +21,8 @@ public class ClienteDTO {
 
 
 
-    public ClienteDTO(String identificacion, String nombre, String direccion, String telefono, String contrasena, Boolean estado) {
+    public ClienteDTO(String identificacion, String nombre, String direccion, String telefono, String contrasena,
+            Boolean estado) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -111,12 +113,12 @@ public class ClienteDTO {
             throw new RuntimeException("Debe pasar el entity Cliente!");
         }
 
-        return new ClienteDTO(cliente.getIdentificacion(),
-                              cliente.getNombre(),
-                              cliente.getDireccion(),
-                              cliente.getTelefono(),
-                              cliente.getContrasena(),
-                              cliente.getEstado());
+        return new  ClienteDTO(cliente.getClienteid(),
+                                cliente.getNombre(),
+                                cliente.getDireccion(),
+                                cliente.getTelefono(),
+                                cliente.getContrasena(),
+                                cliente.getEstado());
 
     }
 

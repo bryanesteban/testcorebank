@@ -1,66 +1,52 @@
 package ec.com.corebank.banquito.models.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "Persona")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "PERSONA")
 public class Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idpersona")
-    private Long idPersona;
+    @Column(name = "IDPERSONA")
+    private Integer idPersona;
 
     @NotBlank
-    @Column(name = "nombre")
+    @Column(name = "NOMBRE", length = 50, nullable = false)
     @Size(min = 4, max = 50)
     private String nombre;
 
-
-    @Column(name = "genero")
+    @Column(name = "GENERO", length = 20)
     @Size(min = 4, max = 20)
     private String genero;
 
-
-    @Column(name = "edad")
-    private int edad;
+    @Column(name = "EDAD")
+    private Integer edad;
 
     @NotBlank
-    @Column(name = "identificacion", unique = true)
+    @Column(name = "IDENTIFICACION", length = 20, nullable = false, unique = true)
     @Size(min = 4, max = 20)
     private String identificacion;
 
     @NotBlank
-    @Column(name = "direccion")
+    @Column(name = "DIRECCION", length = 60, nullable = false)
     @Size(min = 4, max = 60)
     private String direccion;
 
     @NotBlank
-    @Column(name = "telefono")
+    @Column(name = "TELEFONO", length = 60, nullable = false)
     @Size(min = 4, max = 60)
     private String telefono;
 
-    public Persona() {
-    }
+    public Persona() {}
 
-    public Persona(
-        @NotBlank @Size(min = 4, max = 30) String nombre,
-        @NotBlank @Size(min = 4, max = 20) String genero,
-        @NotBlank int edad,
-        @NotBlank @Size(min = 4, max = 20) String identificacion,
-        @NotBlank @Size(min = 4, max = 60) String direccion,
-        @NotBlank @Size(min = 4, max = 60) String telefono) {
-
+    public Persona(Integer idPersona, @NotBlank @Size(min = 4, max = 50) String nombre,
+            @Size(min = 4, max = 20) String genero, Integer edad,
+            @NotBlank @Size(min = 4, max = 20) String identificacion,
+            @NotBlank @Size(min = 4, max = 60) String direccion, @NotBlank @Size(min = 4, max = 60) String telefono) {
+        this.idPersona = idPersona;
         this.nombre = nombre;
         this.genero = genero;
         this.edad = edad;
@@ -69,13 +55,22 @@ public class Persona {
         this.telefono = telefono;
     }
 
-    // Getters and Setters
+    public Persona(@NotBlank @Size(min = 4, max = 50) String nombre, @Size(min = 4, max = 20) String genero,
+            Integer edad, @NotBlank @Size(min = 4, max = 20) String identificacion,
+            @NotBlank @Size(min = 4, max = 60) String direccion, @NotBlank @Size(min = 4, max = 60) String telefono) {
+        this.nombre = nombre;
+        this.genero = genero;
+        this.edad = edad;
+        this.identificacion = identificacion;
+        this.direccion = direccion;
+        this.telefono = telefono;
+    }
 
-    public Long getIdPersona() {
+    public Integer getIdPersona() {
         return idPersona;
     }
 
-    public void setIdPersona(Long idPersona) {
+    public void setIdPersona(Integer idPersona) {
         this.idPersona = idPersona;
     }
 
@@ -95,11 +90,11 @@ public class Persona {
         this.genero = genero;
     }
 
-    public int getEdad() {
+    public Integer getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(Integer edad) {
         this.edad = edad;
     }
 
@@ -126,4 +121,6 @@ public class Persona {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    
 }

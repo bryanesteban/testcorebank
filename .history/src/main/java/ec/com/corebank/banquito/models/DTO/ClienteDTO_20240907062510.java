@@ -20,7 +20,8 @@ public class ClienteDTO {
 
 
 
-    public ClienteDTO(String identificacion, String nombre, String direccion, String telefono, String contrasena, Boolean estado) {
+    public ClienteDTO(String identificacion, String nombre, String direccion, String telefono, String contrasena,
+            Boolean estado) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.direccion = direccion;

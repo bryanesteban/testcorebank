@@ -26,7 +26,6 @@ public class Persona {
     @Size(min = 4, max = 50)
     private String nombre;
 
-
     @Column(name = "genero")
     @Size(min = 4, max = 20)
     private String genero;
@@ -69,6 +68,20 @@ public class Persona {
         this.telefono = telefono;
     }
 
+    public Persona(
+        @NotBlank @Size(min = 4, max = 30) String nombre,
+        @NotBlank @Size(min = 4, max = 20) String identificacion,
+        @NotBlank @Size(min = 4, max = 60) String direccion,
+        @NotBlank @Size(min = 4, max = 60) String telefono
+        ) {
+
+        this.nombre = nombre;
+        this.genero = genero;
+        this.edad = edad;
+        this.identificacion = identificacion;
+        this.direccion = direccion;
+        this.telefono = telefono;
+    }
     // Getters and Setters
 
     public Long getIdPersona() {
