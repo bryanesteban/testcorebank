@@ -103,17 +103,8 @@ public class CuentaService implements CuentaServInterface {
 
     @Override
     public void removeCuenta(String numeroCuenta) {
-        try {
-            Optional<Cuenta> verifyCuenta = cuentaRepository.findByNumeroCuenta(numeroCuenta);
-            if(verifyCuenta.isPresent()){
-                cuentaRepository.delete(verifyCuenta.get());
-            }else{
-                    throw new RuntimeException("Cuenta con numero:"+ numeroCuenta+"no encontrada!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error al eliminar la cuenta con numero: " + numeroCuenta + " - " + e.getMessage());
-        }
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeCuenta'");
     }
 
     

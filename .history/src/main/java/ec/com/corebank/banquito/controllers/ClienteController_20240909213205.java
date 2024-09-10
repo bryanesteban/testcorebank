@@ -47,7 +47,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteDTO> crearCliente(@RequestBody Cliente cliente, BindingResult result) {
+    public ResponseEntity<ClienteDTO> createCliente(@RequestBody Cliente cliente, BindingResult result) {
         
         try {
             System.out.println("cliente:"+ cliente);

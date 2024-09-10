@@ -50,7 +50,7 @@ public class CuentaService implements CuentaServInterface {
             cuentaDTO = cuentaRepository
                         .findByNumeroCuenta(idCuenta)
                         .map(CuentaDTO::build);
-                         
+                        
                     
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,57 +63,20 @@ public class CuentaService implements CuentaServInterface {
 
     @Override
     public CuentaDTO saveCuenta(Cuenta cuenta) {
-        try {
-            Optional <Cuenta> cuentaValidacion = cuentaRepository.findByNumeroCuenta(cuenta.getNumeroCuenta());
-
-            if(!cuentaValidacion.isPresent()){
-                return CuentaDTO.build(cuentaRepository.save(cuenta));
-            }
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error el cliente ya existe:" + e.getLocalizedMessage());
-        }
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'saveCuenta'");
     }
 
     @Override
     public Optional<CuentaDTO> updateCuenta(Cuenta cuenta, String numeroCuenta) {
-        try {
-            Optional<Cuenta> verifyCuenta = cuentaRepository.findByNumeroCuenta(numeroCuenta);
-            
-            if(verifyCuenta.isPresent()){
-                Cuenta cuentaDb = verifyCuenta.get();
-
-                cuentaDb.setTipoCuenta(cuenta.getTipoCuenta());
-                cuentaDb.setSaldo(cuentaDb.getSaldo());
-                cuentaDb.setEstado(cuenta.getEstado());
-
-
-                cuentaRepository.save(cuentaDb);
-                
-                return Optional.of(CuentaDTO.build(cuentaDb));
-            }else {
-                return Optional.empty();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error al actualizar la cuenta con numero:"+ numeroCuenta+ " - " + e.getMessage());
-        }
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateCuenta'");
     }
 
     @Override
     public void removeCuenta(String numeroCuenta) {
-        try {
-            Optional<Cuenta> verifyCuenta = cuentaRepository.findByNumeroCuenta(numeroCuenta);
-            if(verifyCuenta.isPresent()){
-                cuentaRepository.delete(verifyCuenta.get());
-            }else{
-                    throw new RuntimeException("Cuenta con numero:"+ numeroCuenta+"no encontrada!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error al eliminar la cuenta con numero: " + numeroCuenta + " - " + e.getMessage());
-        }
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeCuenta'");
     }
 
     
