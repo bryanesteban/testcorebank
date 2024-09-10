@@ -6,14 +6,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ec.com.corebank.banquito.models.DTO.CuentaDTO;
-import ec.com.corebank.banquito.models.entities.Cliente;
 import ec.com.corebank.banquito.models.entities.Cuenta;
-import ec.com.corebank.banquito.repositories.ClienteRepository;
 import ec.com.corebank.banquito.repositories.CuentaRespository;
 import ec.com.corebank.banquito.services.ServInterface.CuentaServInterface;
 
@@ -23,9 +20,6 @@ public class CuentaService implements CuentaServInterface {
 
     @Autowired
     private CuentaRespository cuentaRepository;
-
-    @Autowired
-    private ClienteRepository clienteRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -70,35 +64,17 @@ public class CuentaService implements CuentaServInterface {
 
     @Override
     @Transactional
-    public CuentaDTO saveCuenta(CuentaDTO cuentaDTO) {
+    public CuentaDTO saveCuenta(CuentaDTO cuenta) {
         try {
-            Optional <Cuenta> cuentaValidacion = cuentaRepository.findByNumerocuenta(cuentaDTO.getNumeroCuenta());
-            
-            Cliente cliente = clienteRepository.findByClienteid(cuentaDTO.getClienteId())
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
-            System.out.println("Cliente:"+cliente.getClienteid());
-
+            Optional <Cuenta> cuentaValidacion = cuentaRepository.findByNumerocuenta(cuenta.getNumeroCuenta());
 
             if(!cuentaValidacion.isPresent()){
-                Cuenta cuenta = new Cuenta();
-                cuenta.setNumeroCuenta(cuentaDTO.getNumeroCuenta());
-                cuenta.setCliente(cliente);
-                cuenta.setEstado(cuentaDTO.isEstado());
-                cuenta.setSaldo(cuentaDTO.getSaldo());
-                cuenta.setTipoCuenta(cuentaDTO.getTipoCuenta());
-
-
                 return CuentaDTO.build(cuentaRepository.save(cuenta));
             }
             return null;
-        } catch (DataIntegrityViolationException e) {
-        // Manejar violación de integridad de datos
-        e.printStackTrace();
-        throw new RuntimeException("Error de integridad de datos: " + e.getLocalizedMessage());
         } catch (Exception e) {
-            // Manejar otras excepciones
             e.printStackTrace();
-            throw new RuntimeException("Error al guardar cuenta: " + e.getLocalizedMessage());
+            throw new RuntimeException("Error el cliente ya existe:" + e.getLocalizedMessage());
         }
     }
 

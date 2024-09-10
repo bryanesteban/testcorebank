@@ -76,10 +76,11 @@ public class CuentaService implements CuentaServInterface {
             
             Cliente cliente = clienteRepository.findByClienteid(cuentaDTO.getClienteId())
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
-            System.out.println("Cliente:"+cliente.getClienteid());
+            
 
 
             if(!cuentaValidacion.isPresent()){
+                System.out.println("Cliente:"+cuentaDTO.getNumeroCuenta());
                 Cuenta cuenta = new Cuenta();
                 cuenta.setNumeroCuenta(cuentaDTO.getNumeroCuenta());
                 cuenta.setCliente(cliente);

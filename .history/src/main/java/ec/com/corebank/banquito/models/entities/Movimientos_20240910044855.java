@@ -8,9 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
-
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -99,12 +99,12 @@ public class Movimientos {
         this.saldo = saldo;
     }
 
-    public Set<Cuenta> getCuentas() {
-        return cuentas;
+    public Cuenta getCuenta() {
+        return cuenta;
     }
 
-    public void setCuentas(Set<Cuenta> cuentas) {
-        this.cuentas = cuentas;
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
     }
 
 }

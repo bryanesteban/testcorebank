@@ -23,7 +23,7 @@ public class ClienteController {
     private ClienteServInterface clienteService;
 
     @GetMapping
-    public ResponseEntity<?> getAllClientes() {
+    public ResponseEntity<List<ClienteDTO>> getAllClientes() {
         try {
             List<ClienteDTO> clientes = clienteService.findAll();
             return new ResponseEntity<>(clientes, HttpStatus.OK);
@@ -34,7 +34,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{clienteId}")
-    public ResponseEntity<?> getClienteById(@PathVariable("clienteId") String clienteId) {
+    public ResponseEntity<ClienteDTO> getClienteById(@PathVariable("clienteId") String clienteId) {
         try {
             Optional<ClienteDTO> cliente = clienteService.findByIdClient(clienteId);
             return cliente.map(ResponseEntity::ok)
@@ -46,7 +46,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> crearCliente(@RequestBody Cliente cliente, BindingResult result) {
+    public ResponseEntity<ClienteDTO> crearCliente(@RequestBody Cliente cliente, BindingResult result) {
         
         try {
             System.out.println("cliente:"+ cliente);
@@ -63,7 +63,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{clienteId}")
-    public ResponseEntity<?> actualizarCliente(@PathVariable("clienteId") String clienteId, 
+    public ResponseEntity<ClienteDTO> actualizarCliente(@PathVariable("clienteId") String clienteId, 
                                                      @RequestBody Cliente cliente) {
         try {
             Optional<ClienteDTO> updatedCliente = clienteService.update(cliente, clienteId);
@@ -76,7 +76,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{clienteId}")
-    public ResponseEntity<?> borrarCliente(@PathVariable("clienteId") String clienteId) {
+    public ResponseEntity<Void> borrarCliente(@PathVariable("clienteId") String clienteId) {
         try {
             clienteService.remove(clienteId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

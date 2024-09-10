@@ -107,7 +107,7 @@ public class Cuenta {
 
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "clienteid", nullable = false, referencedColumnName = "clienteid")
+    @JoinColumn(name = "clienteid", nullable = false)
     private Cliente cliente;
 
 

@@ -1,16 +1,15 @@
 package ec.com.corebank.banquito.models.entities;
 
-
-import java.util.Set;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
-
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -43,8 +42,9 @@ public class Movimientos {
     @Size(min = 4, max = 30)
     private String saldo;
 
-    @ManyToMany(mappedBy = "movimientos")
-    private Set<Cuenta> cuentas;
+     @ManyToOne
+    @JoinColumn(name = "numerocuenta") // Asegúrate de que este nombre coincida con la columna en la tabla Movimientos que actúa como clave foránea
+    private Cuenta cuenta;
 
     public Movimientos() {
     }
@@ -54,7 +54,7 @@ public class Movimientos {
             @NotBlank @Size(min = 4, max = 30) String saldo) {
         this.idMovimiento = idMovimiento;
         this.fechaMovimiento = fechaMovimiento;
-        this.movimiento = movimiento;
+        Movimiento = movimiento;
         this.valor = valor;
         this.saldo = saldo;
     }
@@ -76,11 +76,11 @@ public class Movimientos {
     }
 
     public String getMovimiento() {
-        return movimiento;
+        return Movimiento;
     }
 
     public void setMovimiento(String movimiento) {
-        this.movimiento = movimiento;
+        Movimiento = movimiento;
     }
 
     public float getValor() {
@@ -99,12 +99,19 @@ public class Movimientos {
         this.saldo = saldo;
     }
 
-    public Set<Cuenta> getCuentas() {
-        return cuentas;
-    }
+    
+    @ManyToMany(mappedBy = "movimientos")
+        private List<Cuenta> cuentas;
 
-    public void setCuentas(Set<Cuenta> cuentas) {
-        this.cuentas = cuentas;
-    }
+        public List<Cuenta> getCuentas() {
+            return cuentas;
+        }
+
+        public void setCuentas(List<Cuenta> cuentas) {
+            this.cuentas = cuentas;
+        }
+
+
+
 
 }

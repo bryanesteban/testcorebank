@@ -1,16 +1,13 @@
 package ec.com.corebank.banquito.models.entities;
 
 
-import java.util.Set;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-import jakarta.persistence.ManyToMany;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -43,8 +40,9 @@ public class Movimientos {
     @Size(min = 4, max = 30)
     private String saldo;
 
-    @ManyToMany(mappedBy = "movimientos")
-    private Set<Cuenta> cuentas;
+     @ManyToOne
+    @JoinColumn(name = "numerocuenta") // Asegúrate de que este nombre coincida con la columna en la tabla Movimientos que actúa como clave foránea
+    private Cuenta cuenta;
 
     public Movimientos() {
     }
@@ -99,12 +97,13 @@ public class Movimientos {
         this.saldo = saldo;
     }
 
-    public Set<Cuenta> getCuentas() {
-        return cuentas;
+    public Cuenta getCuenta() {
+        return cuenta;
     }
 
-    public void setCuentas(Set<Cuenta> cuentas) {
-        this.cuentas = cuentas;
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
     }
+
 
 }

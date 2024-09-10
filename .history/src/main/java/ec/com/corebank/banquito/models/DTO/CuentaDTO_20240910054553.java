@@ -15,24 +15,13 @@ public class CuentaDTO {
     }
 
 
-
-    public CuentaDTO(String numeroCuenta, String clienteId, String tipoCuenta, float saldo, boolean estado) {
+    public CuentaDTO(String numeroCuenta, String tipoCuenta, float saldo, boolean estado) {
         this.numeroCuenta = numeroCuenta;
-        this.clienteId = clienteId;
         this.tipoCuenta = tipoCuenta;
         this.saldo = saldo;
         this.estado = estado;
     }
 
-
-    public String getClienteId() {
-        return clienteId;
-    }
-
-
-    public void setClienteId(String clienteId) {
-        this.clienteId = clienteId;
-    }
 
     public String getNumeroCuenta() {
         return numeroCuenta;
@@ -80,7 +69,6 @@ public class CuentaDTO {
         }
 
         return new CuentaDTO(cuenta.getNumeroCuenta(),
-                             cuenta.getCliente().getClienteid(),
                              cuenta.getTipoCuenta(),
                              cuenta.getSaldo(),
                              cuenta.getEstado()

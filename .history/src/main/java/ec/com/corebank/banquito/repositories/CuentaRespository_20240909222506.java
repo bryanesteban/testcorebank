@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface CuentaRespository 
      extends CrudRepository<Cuenta,String>{
 
-          Optional<Cuenta> findByNumerocuenta(String numeroCuenta);
+          Optional<Cuenta>  findByNumeroCuenta(String numeroCuenta);
 }

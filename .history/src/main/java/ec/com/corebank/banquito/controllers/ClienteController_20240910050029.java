@@ -76,7 +76,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{clienteId}")
-    public ResponseEntity<?> borrarCliente(@PathVariable("clienteId") String clienteId) {
+    public ResponseEntity<Void> borrarCliente(@PathVariable("clienteId") String clienteId) {
         try {
             clienteService.remove(clienteId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

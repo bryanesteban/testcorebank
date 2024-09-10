@@ -3,7 +3,6 @@ package ec.com.corebank.banquito.controllers;
 import java.util.List;
 import java.util.Optional;
 import java.util.Map;
-import java.util.HashMap;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class CuentaController {
 
 
     @GetMapping
-    public ResponseEntity<?> getCuentas() {
+    public ResponseEntity <List<CuentaDTO>> getCuentas() {
             try {
                 List<CuentaDTO> cuentas = cuentaService.findAll();
                 return new ResponseEntity<>(cuentas, HttpStatus.OK);
@@ -51,7 +50,7 @@ public class CuentaController {
     }
 
     @GetMapping("/{numeroCuenta}")
-    public ResponseEntity<?> getBusquedaCuenta(@PathVariable("numeroCuenta") String numeroCuenta ) {
+    public ResponseEntity<CuentaDTO> getBusquedaCuenta(@PathVariable("numeroCuenta") String numeroCuenta ) {
         try {
             Optional<CuentaDTO> cuenta = cuentaService.findByNCuenta(numeroCuenta);
             return cuenta.map(ResponseEntity::ok)
@@ -63,14 +62,10 @@ public class CuentaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> crearCuenta(@RequestBody CuentaDTO cuentaDTO, BindingResult result) {
+    public ResponseEntity<CuentaDTO> crearCuenta(@RequestBody Cuenta cuenta, BindingResult result) {
        
-        if(result.hasErrors()){
-            return validation(result);
-        }
-
         try{
-            CuentaDTO guardarcuenta = cuentaService.saveCuenta(cuentaDTO);
+            CuentaDTO guardarcuenta = cuentaService.saveCuenta(cuenta);
             return new ResponseEntity<>(guardarcuenta, HttpStatus.CREATED);
         }catch(Exception e){
             e.printStackTrace();
@@ -80,7 +75,7 @@ public class CuentaController {
     }
 
     @PutMapping("/{numeroCuenta}")
-    public ResponseEntity<?> actualizarCuenta(@PathVariable("numeroCuenta") String numeroCuenta, @RequestBody Cuenta cuenta) {
+    public ResponseEntity<CuentaDTO> actualizarCuenta(@PathVariable("numeroCuenta") String numeroCuenta, @RequestBody Cuenta cuenta) {
         
         try {
             Optional<CuentaDTO> updateCuenta = cuentaService.updateCuenta(cuenta, numeroCuenta);
@@ -93,7 +88,7 @@ public class CuentaController {
     }
 
     @DeleteMapping("/{numeroCuenta}")
-    public ResponseEntity<?> borrarCuenta(@PathVariable("numeroCuenta") String numeroCuenta){
+    public ResponseEntity<Void> borrarCuenta(@PathVariable("numeroCuenta") String numeroCuenta){
         try {
             cuentaService.removeCuenta(numeroCuenta);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

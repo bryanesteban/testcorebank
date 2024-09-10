@@ -2,10 +2,8 @@ package ec.com.corebank.banquito.models.entities;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -32,6 +30,7 @@ public class Cuenta {
     @Size(min = 4, max = 20)
     private String tipocuenta;
 
+    @NotBlank
     @Column(name = "saldo")
     private float saldo;
 
@@ -58,7 +57,7 @@ public class Cuenta {
 
     public Cuenta (
         String numerocuenta,
-        Cliente cliente,
+        Cuenta cuenta,
         String tipoCuenta,
         float saldo,
         boolean estado){
@@ -106,8 +105,8 @@ public class Cuenta {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "clienteid", nullable = false, referencedColumnName = "clienteid")
+    @ManyToOne
+    @JoinColumn(name = "clienteid", nullable = false)
     private Cliente cliente;
 
 

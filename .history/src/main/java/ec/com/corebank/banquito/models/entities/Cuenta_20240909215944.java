@@ -2,91 +2,77 @@ package ec.com.corebank.banquito.models.entities;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 
 @Entity
-@Table(name="cuenta")
+@Table(name="Cuenta")
 public class Cuenta {
 
 
     @Id
     @NotBlank
-    @Column(name = "numerocuenta", nullable = false, length = 30)
-    private String numerocuenta;
+    @Column(name = "numeroCuenta", unique = true)
+    @Size(min = 4, max = 30)
+    private String numeroCuenta;
 
     @NotBlank
-    @Column(name = "tipocuenta")
+    @Column(name = "tipoCuenta")
     @Size(min = 4, max = 20)
-    private String tipocuenta;
+    private String tipoCuenta;
 
+    @NotBlank
     @Column(name = "saldo")
+    @Size(min = 4, max = 20)
     private float saldo;
 
-
+    
     @Column(name = "estado")
+    @Size(min = 4, max = 20)
     private boolean estado;
 
 
     public Cuenta() {}
 
     public Cuenta (
-        String numerocuenta,
+        String numeroCuenta,
         String tipoCuenta,
         float saldo,
         boolean estado){
 
-        this.numerocuenta = numerocuenta;
-        this.tipocuenta = tipoCuenta;
+        this.numeroCuenta = numeroCuenta;
+        this.tipoCuenta = tipoCuenta;
         this.saldo = saldo;
         this.estado = estado;
     
 
     }
 
-    public Cuenta (
-        String numerocuenta,
-        Cliente cliente,
-        String tipoCuenta,
-        float saldo,
-        boolean estado){
-
-        this.numerocuenta = numerocuenta;
-        this.cliente = cliente;
-        this.tipocuenta = tipoCuenta;
-        this.saldo = saldo;
-        this.estado = estado;
-    
-
-    }
 
 
     public String getNumeroCuenta() {
-        return numerocuenta;
+        return numeroCuenta;
     }
 
     public void setNumeroCuenta(String numeroCuenta) {
-        this.numerocuenta = numeroCuenta;
+        this.numeroCuenta = numeroCuenta;
     }
 
     public String getTipoCuenta() {
-        return tipocuenta;
+        return tipoCuenta;
     }
 
     public void setTipoCuenta(String tipoCuenta) {
-        this.tipocuenta = tipoCuenta;
+        this.tipoCuenta = tipoCuenta;
     }
 
     public float getSaldo() {
@@ -106,17 +92,9 @@ public class Cuenta {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "clienteid", nullable = false, referencedColumnName = "clienteid")
+    @ManyToOne
+    @JoinColumn(name = "clienteid")
     private Cliente cliente;
-
-
-    @ManyToMany
-    @JoinTable(
-        name = "CUENTAXMOVIMIENTO",
-        joinColumns = @JoinColumn(name = "NUMEROCUENTA"),
-        inverseJoinColumns = @JoinColumn(name = "IDMOVIMIENTO")
-    )private List<Movimientos> movimientos;
 
     public Cliente getCliente() {
         return cliente;
@@ -125,6 +103,15 @@ public class Cuenta {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+
+    @ManyToMany
+    @JoinTable(
+        name = "cuenta_movimientos",
+        joinColumns = @JoinColumn(name = "numeroCuenta"),
+        inverseJoinColumns = @JoinColumn(name = "idMovimiento")
+    )
+    private List<Movimientos> movimientos;
 
 
     public List<Movimientos> getMovimientos() {

@@ -2,10 +2,8 @@ package ec.com.corebank.banquito.models.entities;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -18,13 +16,14 @@ import jakarta.validation.constraints.Size;
 
 
 @Entity
-@Table(name="cuenta")
+@Table(name="Cuenta")
 public class Cuenta {
 
 
     @Id
     @NotBlank
-    @Column(name = "numerocuenta", nullable = false, length = 30)
+    @Column(name = "numerocuenta", unique = true)
+    @Size(min = 4, max = 30)
     private String numerocuenta;
 
     @NotBlank
@@ -32,6 +31,7 @@ public class Cuenta {
     @Size(min = 4, max = 20)
     private String tipocuenta;
 
+    @NotBlank
     @Column(name = "saldo")
     private float saldo;
 
@@ -56,21 +56,6 @@ public class Cuenta {
 
     }
 
-    public Cuenta (
-        String numerocuenta,
-        Cliente cliente,
-        String tipoCuenta,
-        float saldo,
-        boolean estado){
-
-        this.numerocuenta = numerocuenta;
-        this.cliente = cliente;
-        this.tipocuenta = tipoCuenta;
-        this.saldo = saldo;
-        this.estado = estado;
-    
-
-    }
 
 
     public String getNumeroCuenta() {
@@ -106,17 +91,13 @@ public class Cuenta {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "clienteid", nullable = false, referencedColumnName = "clienteid")
+    @ManyToOne
+    @JoinColumn(name = "clienteid")
     private Cliente cliente;
 
 
-    @ManyToMany
-    @JoinTable(
-        name = "CUENTAXMOVIMIENTO",
-        joinColumns = @JoinColumn(name = "NUMEROCUENTA"),
-        inverseJoinColumns = @JoinColumn(name = "IDMOVIMIENTO")
-    )private List<Movimientos> movimientos;
+    @OneToMany(mappedBy = "cuenta") // Aquí asumimos que en la clase Movimientos hay un atributo 'cuenta'
+    private List<Movimientos> movimientos;
 
     public Cliente getCliente() {
         return cliente;

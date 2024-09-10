@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,10 +72,10 @@ public class CuentaService implements CuentaServInterface {
     public CuentaDTO saveCuenta(CuentaDTO cuentaDTO) {
         try {
             Optional <Cuenta> cuentaValidacion = cuentaRepository.findByNumerocuenta(cuentaDTO.getNumeroCuenta());
-            
+
             Cliente cliente = clienteRepository.findByClienteid(cuentaDTO.getClienteId())
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
-            System.out.println("Cliente:"+cliente.getClienteid());
+
 
 
             if(!cuentaValidacion.isPresent()){
@@ -91,14 +90,9 @@ public class CuentaService implements CuentaServInterface {
                 return CuentaDTO.build(cuentaRepository.save(cuenta));
             }
             return null;
-        } catch (DataIntegrityViolationException e) {
-        // Manejar violación de integridad de datos
-        e.printStackTrace();
-        throw new RuntimeException("Error de integridad de datos: " + e.getLocalizedMessage());
         } catch (Exception e) {
-            // Manejar otras excepciones
             e.printStackTrace();
-            throw new RuntimeException("Error al guardar cuenta: " + e.getLocalizedMessage());
+            throw new RuntimeException("Error el cliente ya existe:" + e.getLocalizedMessage());
         }
     }
 

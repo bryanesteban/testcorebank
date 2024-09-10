@@ -63,14 +63,14 @@ public class CuentaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> crearCuenta(@RequestBody CuentaDTO cuentaDTO, BindingResult result) {
+    public ResponseEntity<?> crearCuenta(@RequestBody CuentaDTO cuenta, BindingResult result) {
        
         if(result.hasErrors()){
             return validation(result);
         }
 
         try{
-            CuentaDTO guardarcuenta = cuentaService.saveCuenta(cuentaDTO);
+            CuentaDTO guardarcuenta = cuentaService.saveCuenta(cuenta);
             return new ResponseEntity<>(guardarcuenta, HttpStatus.CREATED);
         }catch(Exception e){
             e.printStackTrace();
