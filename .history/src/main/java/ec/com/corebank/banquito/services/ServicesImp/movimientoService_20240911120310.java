@@ -57,7 +57,7 @@ public class movimientoService implements MovimientosServInterface {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<MovimientosDTO> findByidMovimiento(Long idmovimiento) {
+    public MovimientosDTO findByidMovimiento(Long idmovimiento) {
         
         MovimientosDTO movimientoDTO = null;
 
@@ -86,7 +86,7 @@ public class movimientoService implements MovimientosServInterface {
             e.printStackTrace();
         }
 
-        return Optional.of(movimientoDTO);
+        return movimientoDTO;
 
     }
 

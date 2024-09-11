@@ -7,7 +7,7 @@ public class CuentaDTO {
     private String numeroCuenta;
     private String clienteId;
     private String tipoCuenta;
-    private String saldoinicial;
+    private String saldo;
     private boolean estado;
     
     
@@ -16,11 +16,11 @@ public class CuentaDTO {
 
 
 
-    public CuentaDTO(String numeroCuenta, String clienteId, String tipoCuenta, String saldoinicial, boolean estado) {
+    public CuentaDTO(String numeroCuenta, String clienteId, String tipoCuenta, String saldo, boolean estado) {
         this.numeroCuenta = numeroCuenta;
         this.clienteId = clienteId;
         this.tipoCuenta = tipoCuenta;
-        this.saldoinicial = saldoinicial;
+        this.saldo = saldo;
         this.estado = estado;
     }
 
@@ -54,13 +54,13 @@ public class CuentaDTO {
     }
 
 
-    public String getSaldoinicial() {
-        return saldoinicial;
+    public String getSaldo() {
+        return saldo;
     }
 
 
-    public void setSaldoinicial(String saldoinicial) {
-        this.saldoinicial = saldoinicial;
+    public void setSaldo(String saldo) {
+        this.saldo = saldo;
     }
 
 

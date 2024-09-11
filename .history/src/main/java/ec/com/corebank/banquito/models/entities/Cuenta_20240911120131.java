@@ -45,12 +45,12 @@ public class Cuenta {
     public Cuenta (
         String numerocuenta,
         String tipoCuenta,
-        String saldoinicial,
+        String saldo,
         boolean estado){
 
         this.numerocuenta = numerocuenta;
         this.tipocuenta = tipoCuenta;
-        this.saldoinicial = saldoinicial;
+        this.saldo = saldo;
         this.estado = estado;
     
 
@@ -60,13 +60,13 @@ public class Cuenta {
         String numerocuenta,
         Cliente cliente,
         String tipoCuenta,
-        String saldoinicial,
+        String saldo,
         boolean estado){
 
         this.numerocuenta = numerocuenta;
         this.cliente = cliente;
         this.tipocuenta = tipoCuenta;
-        this.saldoinicial = saldoinicial;
+        this.saldo = saldo;
         this.estado = estado;
     
 
@@ -89,12 +89,12 @@ public class Cuenta {
         this.tipocuenta = tipoCuenta;
     }
 
-    public String getSaldoinicial() {
-        return saldoinicial;
+    public String getSaldo() {
+        return saldo;
     }
 
-    public void setSaldoinicial(String saldoinicial) {
-        this.saldoinicial = saldoinicial;
+    public void setSaldo(String saldo) {
+        this.saldo = saldo;
     }
 
     public boolean getEstado() {

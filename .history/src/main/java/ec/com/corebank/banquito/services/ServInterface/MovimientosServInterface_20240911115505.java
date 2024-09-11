@@ -10,11 +10,11 @@ public interface MovimientosServInterface {
 
      List<MovimientosDTO> findAll();
 
-    Optional<MovimientosDTO> findByidMovimiento( Long idmovimiento);
+    MovimientosDTO findByidMovimiento( Long idmovimiento);
     
     MovimientosDTO saveMovimiento ( MovimientosDTO movimiento);
 
-    Optional<MovimientosDTO> updateMovimiento(Movimientos movimiento, Long idMovimiento);
+    Optional<MovimientosDTO> updateMovimiento(Movimientos movimiento, String idMovimiento);
 
-    void removeMovimiento(Long idMovimiento );
+    void removeMovimiento(String idMovimiento );
 }

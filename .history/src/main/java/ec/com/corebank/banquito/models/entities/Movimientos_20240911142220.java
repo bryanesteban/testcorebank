@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -51,10 +52,10 @@ public class Movimientos {
     public Movimientos() {
     }
 
-    public Movimientos(Long idmovimiento, @NotBlank @Size(min = 4, max = 30) String fechaMovimiento,
+    public Movimientos(Long idMovimiento, @NotBlank @Size(min = 4, max = 30) String fechaMovimiento,
             @NotBlank @Size(min = 4, max = 30) String tipomovimiento, @NotBlank @Size(min = 4, max = 30) String valor,
             @NotBlank @Size(min = 4, max = 30) String saldo) {
-        this.idmovimiento = idmovimiento;
+        this.idMovimiento = idMovimiento;
         this.fechaMovimiento = fechaMovimiento;
         this.tipomovimiento = tipomovimiento;
         this.valor = valor;
@@ -62,10 +63,10 @@ public class Movimientos {
     }
 
     
-    public Movimientos(Long idmovimiento, @NotBlank @Size(min = 4, max = 30) String fechaMovimiento,
+    public Movimientos(Long idMovimiento, @NotBlank @Size(min = 4, max = 30) String fechaMovimiento,
             @NotBlank @Size(min = 4, max = 30) String tipomovimiento, String valor,
             @NotBlank @Size(min = 4, max = 30) String saldo, Cuenta cuenta) {
-        this.idmovimiento = idmovimiento;
+        this.idMovimiento = idMovimiento;
         this.fechaMovimiento = fechaMovimiento;
         this.tipomovimiento = tipomovimiento;
         this.valor = valor;
@@ -74,11 +75,11 @@ public class Movimientos {
     }
 
     public Long getIdMovimiento() {
-        return idmovimiento;
+        return idMovimiento;
     }
 
-    public void setIdMovimiento(Long idmovimiento) {
-        this.idmovimiento = idmovimiento;
+    public void setIdMovimiento(Long idMovimiento) {
+        this.idMovimiento = idMovimiento;
     }
 
     public String getFechaMovimiento() {

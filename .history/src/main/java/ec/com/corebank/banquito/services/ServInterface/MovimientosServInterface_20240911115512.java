@@ -10,7 +10,7 @@ public interface MovimientosServInterface {
 
      List<MovimientosDTO> findAll();
 
-    Optional<MovimientosDTO> findByidMovimiento( Long idmovimiento);
+    MovimientosDTO findByidMovimiento( Long idmovimiento);
     
     MovimientosDTO saveMovimiento ( MovimientosDTO movimiento);
 

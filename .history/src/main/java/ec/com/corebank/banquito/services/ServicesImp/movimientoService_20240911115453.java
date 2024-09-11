@@ -57,7 +57,7 @@ public class movimientoService implements MovimientosServInterface {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<MovimientosDTO> findByidMovimiento(Long idmovimiento) {
+    public MovimientosDTO findByidMovimiento(Long idmovimiento) {
         
         MovimientosDTO movimientoDTO = null;
 
@@ -86,7 +86,7 @@ public class movimientoService implements MovimientosServInterface {
             e.printStackTrace();
         }
 
-        return Optional.of(movimientoDTO);
+        return movimientoDTO;
 
     }
 
@@ -105,7 +105,7 @@ public class movimientoService implements MovimientosServInterface {
                      Optional<Cuenta> optionalCuenta = cuentaRespository.findByNumerocuenta(movimiento.getNumerocuenta());
                      Cuenta cuentavinculada =  optionalCuenta.get();
                      Cliente clientevinculado = cuentavinculada.getCliente();
-                  Long saldoMovimiento = Long.valueOf(String.valueOf(cuentavinculada.getSaldoinicial())) + Long.valueOf(movimiento.getValor());
+                  Long saldoMovimiento = Long.valueOf(String.valueOf(cuentavinculada.getSaldo())) + Long.valueOf(movimiento.getValor());
                     if( saldoMovimiento < 0 ){
                         newmovimiento.setFechaMovimiento(movimiento.getFechaMovimiento());
                         newmovimiento.setCuenta(cuentavinculada);
@@ -146,7 +146,7 @@ public class movimientoService implements MovimientosServInterface {
                 movimientobd.setFechaMovimiento(movimiento.getFechaMovimiento());
                 movimientobd.setTipoMovimiento(movimiento.getTipoMovimiento());
 
-                Long saldoMovimiento = Long.valueOf(String.valueOf(cuentabd.getSaldoinicial())) + Long.valueOf(movimiento.getSaldo());
+                Long saldoMovimiento = Long.valueOf(String.valueOf(cuentabd.getSaldo())) + Long.valueOf(movimiento.getSaldo());
                 movimientobd.setSaldo(String.valueOf(saldoMovimiento));
                 movimientobd.setValor(movimiento.getValor());
                 Movimientos movimientoagregado = movimientoRepository.save(movimientobd);

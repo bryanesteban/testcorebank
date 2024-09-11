@@ -84,7 +84,7 @@ public class CuentaService implements CuentaServInterface {
                 cuenta.setNumeroCuenta(cuentaDTO.getNumeroCuenta());
                 cuenta.setCliente(cliente);
                 cuenta.setEstado(cuentaDTO.isEstado());
-                cuenta.setSaldoinicial(cuentaDTO.getSaldoinicial());
+                cuenta.setSaldo(cuentaDTO.getSaldo());
                 cuenta.setTipoCuenta(cuentaDTO.getTipoCuenta());
 
 
@@ -112,7 +112,7 @@ public class CuentaService implements CuentaServInterface {
                 Cuenta cuentaDb = verificaCuenta.get();
 
                 cuentaDb.setTipoCuenta(cuenta.getTipoCuenta());
-                cuentaDb.setSaldoinicial(cuentaDb.getSaldoinicial());
+                cuentaDb.setSaldo(cuentaDb.getSaldoinicial());
                 cuentaDb.setEstado(cuenta.getEstado());
 
 

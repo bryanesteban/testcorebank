@@ -93,7 +93,7 @@ public class Cuenta {
         return saldoinicial;
     }
 
-    public void setSaldoinicial(String saldoinicial) {
+    public void setSaldo(String saldoinicial) {
         this.saldoinicial = saldoinicial;
     }
 

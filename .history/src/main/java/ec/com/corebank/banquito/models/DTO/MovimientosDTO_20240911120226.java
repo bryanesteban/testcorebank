@@ -139,7 +139,7 @@ public class MovimientosDTO {
                                     cliente.getNombre(),
                                     cuenta.getNumeroCuenta(),
                                     movimiento.getTipoMovimiento(),
-                                    cuenta.getSaldoinicial(),
+                                    String.valueOf(cuenta.getSaldoinicial()),
                                     cuenta.getEstado(),
                                     movimiento.getValor(),
                                     movimiento.getSaldo()
