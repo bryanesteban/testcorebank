@@ -14,7 +14,7 @@ public interface MovimientosServInterface {
     
     MovimientosDTO saveMovimiento ( MovimientosDTO movimiento);
 
-    Optional<MovimientosDTO> updateMovimiento(Movimientos movimiento, String idMovimiento);
+    MovimientosDTO updateMovimiento(Movimientos movimiento, String idMovimiento);
 
     void removeMovimiento(String idMovimiento );
 }

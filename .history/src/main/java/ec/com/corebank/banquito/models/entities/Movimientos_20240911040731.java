@@ -32,7 +32,7 @@ public class Movimientos {
     @NotBlank
     @Column(name = "tipomovimiento")
     @Size(min = 4, max = 30)
-    private String tipomovimiento;
+    private String movimiento;
 
     @NotBlank
     @Column(name = "valor")
@@ -50,22 +50,22 @@ public class Movimientos {
     }
 
     public Movimientos(Long idMovimiento, @NotBlank @Size(min = 4, max = 30) String fechaMovimiento,
-            @NotBlank @Size(min = 4, max = 30) String tipomovimiento, @NotBlank @Size(min = 4, max = 30) String valor,
+            @NotBlank @Size(min = 4, max = 30) String movimiento, @NotBlank @Size(min = 4, max = 30) String valor,
             @NotBlank @Size(min = 4, max = 30) String saldo) {
         this.idMovimiento = idMovimiento;
         this.fechaMovimiento = fechaMovimiento;
-        this.tipomovimiento = tipomovimiento;
+        this.movimiento = movimiento;
         this.valor = valor;
         this.saldo = saldo;
     }
 
     
     public Movimientos(Long idMovimiento, @NotBlank @Size(min = 4, max = 30) String fechaMovimiento,
-            @NotBlank @Size(min = 4, max = 30) String tipomovimiento, String valor,
+            @NotBlank @Size(min = 4, max = 30) String movimiento, String valor,
             @NotBlank @Size(min = 4, max = 30) String saldo, Cuenta cuenta) {
         this.idMovimiento = idMovimiento;
         this.fechaMovimiento = fechaMovimiento;
-        this.tipomovimiento = tipomovimiento;
+        this.movimiento = movimiento;
         this.valor = valor;
         this.saldo = saldo;
         this.cuenta = cuenta;
@@ -87,12 +87,12 @@ public class Movimientos {
         this.fechaMovimiento = fechaMovimiento;
     }
 
-    public String getTipoMovimiento() {
-        return tipomovimiento;
+    public String getMovimiento() {
+        return movimiento;
     }
 
-    public void setTipoMovimiento(String tipomovimiento) {
-        this.tipomovimiento = tipomovimiento;
+    public void setMovimiento(String movimiento) {
+        this.movimiento = movimiento;
     }
 
     public String getValor() {

@@ -87,7 +87,7 @@ public class Movimientos {
         this.fechaMovimiento = fechaMovimiento;
     }
 
-    public String getTipoMovimiento() {
+    public String getMovimiento() {
         return tipomovimiento;
     }
 

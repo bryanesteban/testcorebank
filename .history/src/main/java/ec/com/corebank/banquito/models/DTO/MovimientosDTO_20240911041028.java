@@ -26,7 +26,7 @@ public class MovimientosDTO {
 
 
 
-    public MovimientosDTO( String fechaMovimiento, String tipomovimiento, String saldoInicial, String numerocuenta, String valor) {
+    public MovimientosDTO( String fechaMovimiento, String tipomovimiento, String saldoInicial, String numerocuenta) {
 
         this.fechaMovimiento = fechaMovimiento;
         this.tipomovimiento = tipomovimiento;
@@ -37,8 +37,8 @@ public class MovimientosDTO {
 
 
 
-    public MovimientosDTO(long idmovimiento, String fechaMovimiento, String cliente, String numerocuenta, String tipomovimiento, String saldoInicial,
-            boolean estado , String valor, String saldo) {
+    public MovimientosDTO(long idmovimiento, String fechaMovimiento, String cliente, String numerocuenta, String tipo, String saldoInicial,
+            boolean estado, String movimiento, String saldo) {
         this.idmovimiento = idmovimiento;
         this.fechaMovimiento = fechaMovimiento;
         this.cliente = cliente;
@@ -111,12 +111,12 @@ public class MovimientosDTO {
         this.estado = estado;
     }
 
-    public String getValor() {
-        return valor;
+    public String getMovimiento() {
+        return movimiento;
     }
 
-    public void setValor(String valor) {
-        this.valor = valor;
+    public void setMovimiento(String movimiento) {
+        this.movimiento = movimiento;
     }
 
     public String getSaldo() {
@@ -138,10 +138,10 @@ public class MovimientosDTO {
                                     movimiento.getFechaMovimiento(),
                                     cliente.getNombre(),
                                     cuenta.getNumeroCuenta(),
-                                    movimiento.getTipoMovimiento(),
+                                    cuenta.getTipoCuenta(),
                                     String.valueOf(cuenta.getSaldo()),
                                     cuenta.getEstado(),
-                                    movimiento.getValor(),
+                                    movimiento.getMovimiento(),
                                     movimiento.getSaldo()
         );
 

@@ -30,45 +30,33 @@ public class Movimientos {
     private String fechaMovimiento;
 
     @NotBlank
-    @Column(name = "tipomovimiento")
+    @Column(name = "movimiento", unique = true)
     @Size(min = 4, max = 30)
-    private String tipomovimiento;
+    private String movimiento;
 
-    @NotBlank
+
     @Column(name = "valor")
-    private String valor;
+    private float valor;
 
     @NotBlank
-    @Column(name = "saldo")
+    @Column(name = "saldo", unique = true)
     @Size(min = 4, max = 30)
     private String saldo;
 
     @ManyToMany(mappedBy = "movimientos")
-    private Cuenta cuenta;
+    private Set<Cuenta> cuentas;
 
     public Movimientos() {
     }
 
     public Movimientos(Long idMovimiento, @NotBlank @Size(min = 4, max = 30) String fechaMovimiento,
-            @NotBlank @Size(min = 4, max = 30) String tipomovimiento, @NotBlank @Size(min = 4, max = 30) String valor,
+            @NotBlank @Size(min = 4, max = 30) String movimiento, @NotBlank @Size(min = 4, max = 30) float valor,
             @NotBlank @Size(min = 4, max = 30) String saldo) {
         this.idMovimiento = idMovimiento;
         this.fechaMovimiento = fechaMovimiento;
-        this.tipomovimiento = tipomovimiento;
+        this.movimiento = movimiento;
         this.valor = valor;
         this.saldo = saldo;
-    }
-
-    
-    public Movimientos(Long idMovimiento, @NotBlank @Size(min = 4, max = 30) String fechaMovimiento,
-            @NotBlank @Size(min = 4, max = 30) String tipomovimiento, String valor,
-            @NotBlank @Size(min = 4, max = 30) String saldo, Cuenta cuenta) {
-        this.idMovimiento = idMovimiento;
-        this.fechaMovimiento = fechaMovimiento;
-        this.tipomovimiento = tipomovimiento;
-        this.valor = valor;
-        this.saldo = saldo;
-        this.cuenta = cuenta;
     }
 
     public Long getIdMovimiento() {
@@ -87,19 +75,19 @@ public class Movimientos {
         this.fechaMovimiento = fechaMovimiento;
     }
 
-    public String getTipoMovimiento() {
-        return tipomovimiento;
+    public String getMovimiento() {
+        return movimiento;
     }
 
-    public void setTipoMovimiento(String tipomovimiento) {
-        this.tipomovimiento = tipomovimiento;
+    public void setMovimiento(String movimiento) {
+        this.movimiento = movimiento;
     }
 
-    public String getValor() {
+    public float getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
+    public void setValor(float valor) {
         this.valor = valor;
     }
 
@@ -111,12 +99,12 @@ public class Movimientos {
         this.saldo = saldo;
     }
 
-    public Cuenta getCuenta() {
-        return cuenta;
+    public Set<Cuenta> getCuentas() {
+        return cuentas;
     }
 
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
+    public void setCuentas(Set<Cuenta> cuentas) {
+        this.cuentas = cuentas;
     }
 
 }

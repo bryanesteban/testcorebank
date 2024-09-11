@@ -10,10 +10,10 @@ public class MovimientosDTO {
     private String fechaMovimiento ;
     private String cliente;
     private String numerocuenta;
-    private String tipomovimiento;
+    private String tipo;
     private String saldoInicial;
     private boolean estado;
-    private String valor;
+    private String movimiento;
     private String saldo;
     
     
@@ -26,27 +26,26 @@ public class MovimientosDTO {
 
 
 
-    public MovimientosDTO( String fechaMovimiento, String tipomovimiento, String saldoInicial, String numerocuenta, String valor) {
+    public MovimientosDTO( String fechaMovimiento, String movimiento, String saldoInicial, String numerocuenta) {
 
         this.fechaMovimiento = fechaMovimiento;
-        this.tipomovimiento = tipomovimiento;
+        this.movimiento = movimiento;
         this.saldoInicial = saldoInicial;
         this.numerocuenta = numerocuenta;
-        this.valor = valor;
     }
 
 
 
-    public MovimientosDTO(long idmovimiento, String fechaMovimiento, String cliente, String numerocuenta, String tipomovimiento, String saldoInicial,
-            boolean estado , String valor, String saldo) {
+    public MovimientosDTO(long idmovimiento, String fechaMovimiento, String cliente, String numerocuenta, String tipo, String saldoInicial,
+            boolean estado, String movimiento, String saldo) {
         this.idmovimiento = idmovimiento;
         this.fechaMovimiento = fechaMovimiento;
         this.cliente = cliente;
         this.numerocuenta = numerocuenta;
-        this.tipomovimiento = tipomovimiento;
+        this.tipo = tipo;
         this.saldoInicial = saldoInicial;
         this.estado = estado;
-        this.valor = valor;
+        this.movimiento = movimiento;
         this.saldo = saldo;
     }
 
@@ -87,12 +86,12 @@ public class MovimientosDTO {
         this.numerocuenta = numerocuenta;
     }
 
-    public String getTipoMovimiento() {
-        return tipomovimiento;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipoMovimiento(String tipomovimiento) {
-        this.tipomovimiento = tipomovimiento;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getSaldoInicial() {
@@ -111,12 +110,12 @@ public class MovimientosDTO {
         this.estado = estado;
     }
 
-    public String getValor() {
-        return valor;
+    public String getMovimiento() {
+        return movimiento;
     }
 
-    public void setValor(String valor) {
-        this.valor = valor;
+    public void setMovimiento(String movimiento) {
+        this.movimiento = movimiento;
     }
 
     public String getSaldo() {
@@ -138,10 +137,10 @@ public class MovimientosDTO {
                                     movimiento.getFechaMovimiento(),
                                     cliente.getNombre(),
                                     cuenta.getNumeroCuenta(),
-                                    movimiento.getTipoMovimiento(),
+                                    cuenta.getTipoCuenta(),
                                     String.valueOf(cuenta.getSaldo()),
                                     cuenta.getEstado(),
-                                    movimiento.getValor(),
+                                    movimiento.getMovimiento(),
                                     movimiento.getSaldo()
         );
 

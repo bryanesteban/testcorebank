@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface MovimientosRepository
     extends CrudRepository<Movimientos,Long> {
 
-        Optional<Movimientos> findByIdMovimiento(String idMovimiento);
+        Optional<Movimientos> findByIdMovimiento(Long idMovimiento);
 }

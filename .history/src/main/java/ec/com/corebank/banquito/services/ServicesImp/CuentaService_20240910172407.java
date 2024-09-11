@@ -132,9 +132,9 @@ public class CuentaService implements CuentaServInterface {
     @Transactional
     public void removeCuenta(String numeroCuenta) {
         try {
-            Optional<Cuenta> verificaCuenta = cuentaRepository.findByNumerocuenta(numeroCuenta);
-            if(verificaCuenta.isPresent()){
-                cuentaRepository.delete(verificaCuenta.get());
+            Optional<Cuenta> verifyCuenta = cuentaRepository.findByNumerocuenta(numeroCuenta);
+            if(verifyCuenta.isPresent()){
+                cuentaRepository.delete(verifyCuenta.get());
             }else{
                     throw new RuntimeException("Cuenta con numero:"+ numeroCuenta+"no encontrada!");
             }

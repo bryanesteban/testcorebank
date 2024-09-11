@@ -10,9 +10,9 @@ public interface MovimientosServInterface {
 
      List<MovimientosDTO> findAll();
 
-    MovimientosDTO findByidMovimiento( String idmovimiento);
+    MovimientosDTO findByidMovimiento( Movimientos movimiento);
     
-    MovimientosDTO saveMovimiento ( MovimientosDTO movimiento);
+    MovimientosDTO saveMovimiento ( Movimientos movimiento);
 
     Optional<MovimientosDTO> updateMovimiento(Movimientos movimiento, String idMovimiento);
 

@@ -12,7 +12,7 @@ public interface MovimientosServInterface {
 
     MovimientosDTO findByidMovimiento( String idmovimiento);
     
-    MovimientosDTO saveMovimiento ( MovimientosDTO movimiento);
+    MovimientosDTO saveMovimiento ( Movimientos movimiento);
 
     Optional<MovimientosDTO> updateMovimiento(Movimientos movimiento, String idMovimiento);
 
