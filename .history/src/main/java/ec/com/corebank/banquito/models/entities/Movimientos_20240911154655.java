@@ -89,11 +89,11 @@ public class Movimientos {
         this.fechamovimiento = fechamovimiento;
     }
 
-    public String getTipomovimiento() {
+    public String getTipoMovimiento() {
         return tipomovimiento;
     }
 
-    public void setTipomovimiento(String tipomovimiento) {
+    public void setTipoMovimiento(String tipomovimiento) {
         this.tipomovimiento = tipomovimiento;
     }
 

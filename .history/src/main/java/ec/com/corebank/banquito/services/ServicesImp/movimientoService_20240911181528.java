@@ -12,7 +12,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ec.com.corebank.banquito.config.ManagmentException;
 import ec.com.corebank.banquito.models.DTO.MovimientosDTO;
 import ec.com.corebank.banquito.models.entities.Cliente;
 import ec.com.corebank.banquito.models.entities.Cuenta;
@@ -120,8 +119,6 @@ public class movimientoService implements MovimientosServInterface {
                         cuentavinculada.setSaldoinicial(String.valueOf(saldoMovimiento));
                         Cuenta operacion = cuentaRespository.save(cuentavinculada);
                         //Guardado del Movimiento
-                        System.out.println("saldo inicial de la operacion:"+saldoMovimiento);
-                        System.out.println("saldo inicial de la tabla:"+operacion.getSaldoinicial());
                         if(operacion.getSaldoinicial().equals(String.valueOf(saldoMovimiento)))
                         {
                             newmovimiento.setFechaMovimiento(getCurrentDate());
@@ -135,18 +132,12 @@ public class movimientoService implements MovimientosServInterface {
                         
                         
                         
-                    }else{
-                        throw new ManagmentException("Saldo insuficiente para realizar la operación.");
                     }
 
                 }
              return  movimientoResultado;  
 
-        }catch (ManagmentException e) {
-            // Propagar la excepción de saldo insuficiente
-            throw e;
-        }
-        catch (DataIntegrityViolationException e) {
+        }catch (DataIntegrityViolationException e) {
         // Manejar violación de integridad de datos
         e.printStackTrace();
         throw new RuntimeException("Error de integridad de datos: " + e.getLocalizedMessage());

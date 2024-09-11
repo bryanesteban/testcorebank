@@ -4,23 +4,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ec.com.corebank.banquito.config.ManagmentException;
 import ec.com.corebank.banquito.models.DTO.MovimientosDTO;
 import ec.com.corebank.banquito.models.entities.Cliente;
 import ec.com.corebank.banquito.models.entities.Cuenta;
 import ec.com.corebank.banquito.models.entities.Movimientos;
-import ec.com.corebank.banquito.models.entities.Transaccion;
 import ec.com.corebank.banquito.repositories.CuentaRespository;
 import ec.com.corebank.banquito.repositories.MovimientosRepository;
-import ec.com.corebank.banquito.repositories.TransaccionRepository;
 import ec.com.corebank.banquito.services.ServInterface.MovimientosServInterface;
 
 @Service
@@ -31,10 +26,6 @@ public class movimientoService implements MovimientosServInterface {
 
     @Autowired
     private CuentaRespository cuentaRespository;
-
-
-    @Autowired
-    private TransaccionRepository transaccionRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -102,51 +93,32 @@ public class movimientoService implements MovimientosServInterface {
     public MovimientosDTO saveMovimiento(MovimientosDTO movimiento) {
         
         MovimientosDTO movimientoResultado = null;
-        
+        Optional<Movimientos> verificaMovimiento = movimientoRepository.findByIdmovimiento(movimiento.getIdmovimiento());
         try{
-                Optional<Movimientos> verificaMovimiento = movimientoRepository.findByIdmovimiento(movimiento.getIdmovimiento());
-                Optional<Transaccion> optionalAccion = transaccionRepository.findByDescripcion(movimiento.getTipomovimiento());
+                
+
                 if(!verificaMovimiento.isPresent()){
                     Movimientos newmovimiento = new Movimientos();
 
                      Optional<Cuenta> optionalCuenta = cuentaRespository.findByNumerocuenta(movimiento.getNumerocuenta());
+                     System.out.println("Numero de Cuenta:"+optionalCuenta.get().getNumeroCuenta());
                      Cuenta cuentavinculada =  optionalCuenta.get();
                      Cliente clientevinculado = cuentavinculada.getCliente();
-                     Transaccion accion = optionalAccion.get();
-                  Long saldoMovimiento = Long.valueOf(cuentavinculada.getSaldoinicial()) +(Long.valueOf(accion.getFormula()))*Long.valueOf(movimiento.getValor());
-                    if( saldoMovimiento >= 0 ){
-                        
-                        //Actualizacion de la cuenta
-                        cuentavinculada.setSaldoinicial(String.valueOf(saldoMovimiento));
-                        Cuenta operacion = cuentaRespository.save(cuentavinculada);
-                        //Guardado del Movimiento
-                        System.out.println("saldo inicial de la operacion:"+saldoMovimiento);
-                        System.out.println("saldo inicial de la tabla:"+operacion.getSaldoinicial());
-                        if(operacion.getSaldoinicial().equals(String.valueOf(saldoMovimiento)))
-                        {
-                            newmovimiento.setFechaMovimiento(getCurrentDate());
-                            newmovimiento.setCuenta(cuentavinculada);
-                            newmovimiento.setTipomovimiento(movimiento.getTipomovimiento());
-                            newmovimiento.setSaldo(String.valueOf(saldoMovimiento));
-                            newmovimiento.setValor(movimiento.getValor());
-                            Movimientos movimientoagregado = movimientoRepository.save(newmovimiento);
-                            movimientoResultado = MovimientosDTO.build(clientevinculado, cuentavinculada, movimientoagregado);
-                        }
-                        
-                        
-                        
-                    }else{
-                        throw new ManagmentException("Saldo insuficiente para realizar la operación.");
+                  Long saldoMovimiento = Long.valueOf(cuentavinculada.getSaldoinicial()) + Long.valueOf(movimiento.getValor());
+                    if( saldoMovimiento > 0 ){
+                        newmovimiento.setFechaMovimiento(movimiento.getFechaMovimiento());
+                        newmovimiento.setCuenta(cuentavinculada);
+                        newmovimiento.setTipoMovimiento(movimiento.getTipoMovimiento());
+                        newmovimiento.setSaldo(String.valueOf(saldoMovimiento));
+                        newmovimiento.setValor(movimiento.getValor());
+                        Movimientos movimientoagregado = movimientoRepository.save(newmovimiento);
+                        movimientoResultado = MovimientosDTO.build(clientevinculado, cuentavinculada, movimientoagregado);
                     }
 
                 }
              return  movimientoResultado;  
 
-        }catch (ManagmentException e) {
-            // Propagar la excepción de saldo insuficiente
-            throw e;
-        }
-        catch (DataIntegrityViolationException e) {
+        }catch (DataIntegrityViolationException e) {
         // Manejar violación de integridad de datos
         e.printStackTrace();
         throw new RuntimeException("Error de integridad de datos: " + e.getLocalizedMessage());
@@ -171,7 +143,7 @@ public class movimientoService implements MovimientosServInterface {
                 Cuenta cuentabd = movimientobd.getCuenta();
                 Cliente clientebd = cuentabd.getCliente();
                 movimientobd.setFechaMovimiento(movimiento.getFechaMovimiento());
-                movimientobd.setTipomovimiento(movimiento.getTipomovimiento());
+                movimientobd.setTipoMovimiento(movimiento.getTipoMovimiento());
 
                 Long saldoMovimiento = Long.valueOf(String.valueOf(cuentabd.getSaldoinicial())) + Long.valueOf(movimiento.getSaldo());
                 movimientobd.setSaldo(String.valueOf(saldoMovimiento));
@@ -206,12 +178,6 @@ public class movimientoService implements MovimientosServInterface {
         }
     }
 
-
-    public static String getCurrentDate() {
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return today.format(formatter);
-    }
 
     
 }

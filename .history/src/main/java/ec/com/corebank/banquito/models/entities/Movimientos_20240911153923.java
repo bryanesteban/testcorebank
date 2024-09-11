@@ -31,7 +31,7 @@ public class Movimientos {
     private String fechamovimiento;
 
     @NotBlank
-    @Column(name = "tipomovimiento")
+    @Column(name = "movimiento")
     @Size(min = 4, max = 30)
     private String tipomovimiento;
 
@@ -89,11 +89,11 @@ public class Movimientos {
         this.fechamovimiento = fechamovimiento;
     }
 
-    public String getTipomovimiento() {
+    public String getTipoMovimiento() {
         return tipomovimiento;
     }
 
-    public void setTipomovimiento(String tipomovimiento) {
+    public void setTipoMovimiento(String tipomovimiento) {
         this.tipomovimiento = tipomovimiento;
     }
 

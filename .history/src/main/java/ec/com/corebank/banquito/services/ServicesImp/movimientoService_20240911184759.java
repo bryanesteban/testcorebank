@@ -135,8 +135,6 @@ public class movimientoService implements MovimientosServInterface {
                         
                         
                         
-                    }else{
-                        throw new ManagmentException("Saldo insuficiente para realizar la operación.");
                     }
 
                 }

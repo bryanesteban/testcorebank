@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ec.com.corebank.banquito.config.ManagmentException;
-import ec.com.corebank.banquito.models.DTO.ErrorResponse;
 import ec.com.corebank.banquito.models.DTO.MovimientosDTO;
 import ec.com.corebank.banquito.models.entities.Movimientos;
 import ec.com.corebank.banquito.services.ServInterface.MovimientosServInterface;
@@ -68,7 +66,7 @@ public class MovimientoController {
     @PostMapping
     public ResponseEntity<?> crearMovimiento(@RequestBody MovimientosDTO movimiento, BindingResult result)
     {
-        System.out.println("tipo de movimiento:"+movimiento.getTipomovimiento());
+        System.out.println("tipo de movimiento:"+movimiento.getTipoMovimiento());
 
         if(result.hasErrors()){
             return validation(result);
@@ -78,9 +76,7 @@ public class MovimientoController {
         try {
             MovimientosDTO guardarmovimiento = movimientoService.saveMovimiento(movimiento);
             return new ResponseEntity<>(guardarmovimiento, HttpStatus.CREATED);
-        } catch (ManagmentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("Saldo insuficiente", e.getMessage()));
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

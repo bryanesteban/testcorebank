@@ -41,7 +41,7 @@ public class Movimientos {
 
     @NotBlank
     @Column(name = "saldo")
-    @Size(min = 1, max = 30)
+    @Size(min = 4, max = 30)
     private String saldo;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -53,7 +53,7 @@ public class Movimientos {
 
     public Movimientos(Long idmovimiento, @NotBlank @Size(min = 4, max = 30) String fechamovimiento,
             @NotBlank @Size(min = 4, max = 30) String tipomovimiento, @NotBlank @Size(min = 4, max = 30) String valor,
-            @NotBlank @Size(min = 1, max = 30) String saldo) {
+            @NotBlank @Size(min = 4, max = 30) String saldo) {
         this.idmovimiento = idmovimiento;
         this.fechamovimiento = fechamovimiento;
         this.tipomovimiento = tipomovimiento;
@@ -64,7 +64,7 @@ public class Movimientos {
     
     public Movimientos(Long idmovimiento, @NotBlank @Size(min = 4, max = 30) String fechamovimiento,
             @NotBlank @Size(min = 4, max = 30) String tipomovimiento, String valor,
-            @NotBlank @Size(min = 1, max = 30) String saldo, Cuenta cuenta) {
+            @NotBlank @Size(min = 4, max = 30) String saldo, Cuenta cuenta) {
         this.idmovimiento = idmovimiento;
         this.fechamovimiento = fechamovimiento;
         this.tipomovimiento = tipomovimiento;
@@ -89,11 +89,11 @@ public class Movimientos {
         this.fechamovimiento = fechamovimiento;
     }
 
-    public String getTipomovimiento() {
+    public String getTipoMovimiento() {
         return tipomovimiento;
     }
 
-    public void setTipomovimiento(String tipomovimiento) {
+    public void setTipoMovimiento(String tipomovimiento) {
         this.tipomovimiento = tipomovimiento;
     }
 

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.corebank.banquito.config.ManagmentException;
-import ec.com.corebank.banquito.models.DTO.ErrorResponse;
 import ec.com.corebank.banquito.models.DTO.MovimientosDTO;
 import ec.com.corebank.banquito.models.entities.Movimientos;
 import ec.com.corebank.banquito.services.ServInterface.MovimientosServInterface;

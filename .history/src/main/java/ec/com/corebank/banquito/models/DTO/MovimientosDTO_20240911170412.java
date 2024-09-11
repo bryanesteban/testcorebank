@@ -23,8 +23,9 @@ public class MovimientosDTO {
 
 
 
-    public MovimientosDTO(String numerocuenta, String tipomovimiento, String valor) {
-        
+    public MovimientosDTO( String fechaMovimiento, String numerocuenta, String tipomovimiento, String valor) {
+
+        this.fechaMovimiento = fechaMovimiento;
         this.numerocuenta = numerocuenta;
         this.tipomovimiento = tipomovimiento;
         this.valor = valor;

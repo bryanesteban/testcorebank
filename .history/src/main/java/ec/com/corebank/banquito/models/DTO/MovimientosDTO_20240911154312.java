@@ -23,10 +23,14 @@ public class MovimientosDTO {
 
 
 
-    public MovimientosDTO(String numerocuenta, String tipomovimiento, String valor) {
-        
-        this.numerocuenta = numerocuenta;
+
+
+
+    public MovimientosDTO( String fechaMovimiento, String tipomovimiento, String numerocuenta, String valor) {
+
+        this.fechaMovimiento = fechaMovimiento;
         this.tipomovimiento = tipomovimiento;
+        this.numerocuenta = numerocuenta;
         this.valor = valor;
     }
 
@@ -50,115 +54,77 @@ public class MovimientosDTO {
 
 
 
-    
-
     public long getIdmovimiento() {
         return idmovimiento;
     }
-
-
 
     public void setIdmovimiento(long idmovimiento) {
         this.idmovimiento = idmovimiento;
     }
 
-
-
     public String getFechaMovimiento() {
         return fechaMovimiento;
     }
-
-
 
     public void setFechaMovimiento(String fechaMovimiento) {
         this.fechaMovimiento = fechaMovimiento;
     }
 
-
-
     public String getCliente() {
         return cliente;
     }
-
-
 
     public void setCliente(String cliente) {
         this.cliente = cliente;
     }
 
-
-
     public String getNumerocuenta() {
         return numerocuenta;
     }
-
-
 
     public void setNumerocuenta(String numerocuenta) {
         this.numerocuenta = numerocuenta;
     }
 
-
-
-    public String getTipomovimiento() {
+    public String getTipoMovimiento() {
         return tipomovimiento;
     }
 
-
-
-    public void setTipomovimiento(String tipomovimiento) {
+    public void setTipoMovimiento(String tipomovimiento) {
         this.tipomovimiento = tipomovimiento;
     }
-
-
 
     public String getSaldoInicial() {
         return saldoInicial;
     }
 
-
-
     public void setSaldoInicial(String saldoInicial) {
         this.saldoInicial = saldoInicial;
     }
-
-
 
     public boolean isEstado() {
         return estado;
     }
 
-
-
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-
-
 
     public String getValor() {
         return valor;
     }
 
-
-
     public void setValor(String valor) {
         this.valor = valor;
     }
-
-
 
     public String getSaldo() {
         return saldo;
     }
 
-
-
     public void setSaldo(String saldo) {
         this.saldo = saldo;
     }
-
-
 
     public static MovimientosDTO build (Cliente cliente, Cuenta cuenta, Movimientos movimiento)
     {
@@ -171,7 +137,7 @@ public class MovimientosDTO {
                                     movimiento.getFechaMovimiento(),
                                     cliente.getNombre(),
                                     cuenta.getNumeroCuenta(),
-                                    movimiento.getTipomovimiento(),
+                                    movimiento.getTipoMovimiento(),
                                     cuenta.getSaldoinicial(),
                                     cuenta.getEstado(),
                                     movimiento.getValor(),
