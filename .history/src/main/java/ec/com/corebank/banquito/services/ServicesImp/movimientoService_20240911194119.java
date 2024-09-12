@@ -144,7 +144,7 @@ public class movimientoService implements MovimientosServInterface {
                         //Guardado del Movimiento
                         if(operacion.getSaldoinicial().equals(String.valueOf(saldoMovimiento)))
                         {
-                            newmovimiento.setFechaMovimiento(LocalDate.now());
+                            newmovimiento.setFechaMovimiento(getCurrentDate());
                             newmovimiento.setCuenta(cuentavinculada);
                             newmovimiento.setTipomovimiento(movimiento.getTipomovimiento());
                             newmovimiento.setSaldo(String.valueOf(saldoMovimiento));
@@ -224,7 +224,7 @@ public class movimientoService implements MovimientosServInterface {
     }
 
 
-    public static String getCurrentDate() {
+    public static LocalDate getCurrentDate() {
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
         return today.format(formatter);

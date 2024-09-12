@@ -4,8 +4,6 @@ import ec.com.corebank.banquito.models.entities.Cliente;
 import ec.com.corebank.banquito.models.entities.Cuenta;
 import ec.com.corebank.banquito.models.entities.Movimientos;
 
-import java.time.LocalDate;
-
 public class MovimientosDTO {
 
     private long idmovimiento;
@@ -34,7 +32,7 @@ public class MovimientosDTO {
 
 
 
-    public MovimientosDTO(long idmovimiento, LocalDate fechaMovimiento, String cliente, String numerocuenta, String tipomovimiento, String saldoInicial,
+    public MovimientosDTO(long idmovimiento, String fechaMovimiento, String cliente, String numerocuenta, String tipomovimiento, String saldoInicial,
             boolean estado , String valor, String saldo) {
         this.idmovimiento = idmovimiento;
         this.fechaMovimiento = fechaMovimiento;
@@ -66,13 +64,13 @@ public class MovimientosDTO {
 
 
 
-    public LocalDate getFechaMovimiento() {
+    public String getFechaMovimiento() {
         return fechaMovimiento;
     }
 
 
 
-    public void setFechaMovimiento(LocalDate fechaMovimiento) {
+    public void setFechaMovimiento(String fechaMovimiento) {
         this.fechaMovimiento = fechaMovimiento;
     }
 

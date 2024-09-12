@@ -1,5 +1,7 @@
 package ec.com.corebank.banquito.models.entities;
 
+
+import java.util.Set;
 import java.time.LocalDate;
 
 import jakarta.persistence.CascadeType;
@@ -23,6 +25,8 @@ public class Movimientos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idmovimiento;
 
+
+    @NotBlank
     @Column(name = "fechamovimiento")
     private LocalDate fechamovimiento;
 
@@ -77,11 +81,11 @@ public class Movimientos {
         this.idmovimiento = idmovimiento;
     }
 
-    public LocalDate getFechaMovimiento() {
+    public String getFechaMovimiento() {
         return fechamovimiento;
     }
 
-    public void setFechaMovimiento(LocalDate fechamovimiento) {
+    public void setFechaMovimiento(String fechamovimiento) {
         this.fechamovimiento = fechamovimiento;
     }
 

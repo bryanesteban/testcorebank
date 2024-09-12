@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -64,18 +65,18 @@ public class MovimientoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
 
-    @GetMapping("/reportes")
-    public ResponseEntity<?> getMovimientosByFechaRange(
-            @RequestParam("fechaInicio") String fechaInicio,
-            @RequestParam("fechaFin") String fechaFin) {
+
+     @GetMapping
+    public ResponseEntity<?> generarReporte(@RequestParam("fechaInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
+                                            @RequestParam("fechaFin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin) {
         try {
-            List<MovimientosDTO> movimientos = movimientoService.findMovimientosByFechaRange(fechaInicio, fechaFin);
-            return new ResponseEntity<>(movimientos, HttpStatus.OK);
+            // Llama al servicio para obtener los datos del reporte
+            List<MovimientosDTO> reporte = movimientoService.generarReporte(fechaInicio, fechaFin);
+            return ResponseEntity.ok(reporte);
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            // Manejar excepciones
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Error al generar el reporte", e.getMessage()));
         }
     }
 

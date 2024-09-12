@@ -23,6 +23,8 @@ public class Movimientos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idmovimiento;
 
+
+    @NotBlank
     @Column(name = "fechamovimiento")
     private LocalDate fechamovimiento;
 

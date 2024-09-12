@@ -15,5 +15,5 @@ public interface MovimientosRepository
 
         Optional<Movimientos> findByIdmovimiento(Long idMovimiento);
 
-        List<Movimientos> findByFechamovimientoBetween(LocalDate fechaInicio, LocalDate fechaFin);
+        List<Movimientos> findByFechaMovimientoBetween(LocalDate fechaInicio, LocalDate fechaFin);
 }

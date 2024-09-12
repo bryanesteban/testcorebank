@@ -4,8 +4,6 @@ import ec.com.corebank.banquito.models.entities.Cliente;
 import ec.com.corebank.banquito.models.entities.Cuenta;
 import ec.com.corebank.banquito.models.entities.Movimientos;
 
-import java.time.LocalDate;
-
 public class MovimientosDTO {
 
     private long idmovimiento;

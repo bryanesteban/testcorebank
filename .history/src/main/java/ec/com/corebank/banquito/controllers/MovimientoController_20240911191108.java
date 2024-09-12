@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.corebank.banquito.config.ManagmentException;
@@ -65,19 +64,6 @@ public class MovimientoController {
         }
     }
     
-
-    @GetMapping("/reportes")
-    public ResponseEntity<?> getMovimientosByFechaRange(
-            @RequestParam("fechaInicio") String fechaInicio,
-            @RequestParam("fechaFin") String fechaFin) {
-        try {
-            List<MovimientosDTO> movimientos = movimientoService.findMovimientosByFechaRange(fechaInicio, fechaFin);
-            return new ResponseEntity<>(movimientos, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
 
     @PostMapping

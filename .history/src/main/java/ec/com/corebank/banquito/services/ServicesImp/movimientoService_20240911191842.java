@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -107,7 +105,7 @@ public class movimientoService implements MovimientosServInterface {
         LocalDate startDate = LocalDate.parse(fechaInicio, formatter);
         LocalDate endDate = LocalDate.parse(fechaFin, formatter);
         
-        List<Movimientos> movimientosLista = movimientoRepository.findByFechamovimientoBetween(startDate, endDate);
+        List<Movimientos> movimientosLista = movimientoRepository.findByFechaBetween(startDate, endDate);
         
         return movimientosLista.stream()
             .map(movimiento -> {
@@ -144,7 +142,7 @@ public class movimientoService implements MovimientosServInterface {
                         //Guardado del Movimiento
                         if(operacion.getSaldoinicial().equals(String.valueOf(saldoMovimiento)))
                         {
-                            newmovimiento.setFechaMovimiento(LocalDate.now());
+                            newmovimiento.setFechaMovimiento(getCurrentDate());
                             newmovimiento.setCuenta(cuentavinculada);
                             newmovimiento.setTipomovimiento(movimiento.getTipomovimiento());
                             newmovimiento.setSaldo(String.valueOf(saldoMovimiento));
@@ -188,6 +186,7 @@ public class movimientoService implements MovimientosServInterface {
                 Movimientos movimientobd = verificaMovimiento.get();
                 Cuenta cuentabd = movimientobd.getCuenta();
                 Cliente clientebd = cuentabd.getCliente();
+                movimientobd.setFechaMovimiento(movimiento.getFechaMovimiento());
                 movimientobd.setTipomovimiento(movimiento.getTipomovimiento());
 
                 Long saldoMovimiento = Long.valueOf(String.valueOf(cuentabd.getSaldoinicial())) + Long.valueOf(movimiento.getSaldo());
@@ -226,7 +225,7 @@ public class movimientoService implements MovimientosServInterface {
 
     public static String getCurrentDate() {
         LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return today.format(formatter);
     }
 
