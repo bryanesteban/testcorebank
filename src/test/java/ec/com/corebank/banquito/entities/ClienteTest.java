@@ -1,5 +1,5 @@
+package ec.com.corebank.banquito.entities;
 import org.junit.jupiter.api.Test;
-
 import ec.com.corebank.banquito.models.entities.Persona;
 import ec.com.corebank.banquito.models.entities.Cliente;
 
@@ -9,20 +9,15 @@ public class ClienteTest {
 
     @Test
     public void testClienteConstructorAndGettersSetters() {
-        // Crear un objeto Cliente
-        Persona persona = new Persona("Hades Polydegmon", "Masculino", 30, "1234567890", "Campos eliseos", "535-1234");
-        Cliente cliente = new Cliente(
-                persona.getNombre(),
-                persona.getGenero(),
-                persona.getEdad(),
-                persona.getIdentificacion(),
-                persona.getDireccion(),
-                persona.getTelefono(),
-                "cliente123",
-                "securePassword",
-                true
-        );
+        // Crear un objeto Persona
+        Persona persona = new Persona("Hades Polydegmon", "Masculino", 30, "1234567890", "Campos Eliseos", "535-1234");
+
+        // Crear un objeto Cliente usando solo Persona
+        Cliente cliente = new Cliente();
         cliente.setPersona(persona);
+        cliente.setClienteid("cliente123");
+        cliente.setContrasena("securePassword");
+        cliente.setEstado(true);
 
         // Verificar que los getters devuelvan los valores correctos
         assertEquals("cliente123", cliente.getClienteid());
