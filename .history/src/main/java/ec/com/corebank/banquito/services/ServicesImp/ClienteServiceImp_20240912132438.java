@@ -77,8 +77,8 @@ public class ClienteServiceImp implements ClienteServInterface {
             Optional <Persona> personaValidation = personaRepository.findByIdentificacion(cliente.getIdentificacion());
             
             if(!personaValidation.isPresent()){
-                Cliente  clienteencryp = encryptServ.encryptCliente(cliente);
-                return ClienteDTO.build(encryptServ.decryptCliente(clienteRepository.save(clienteencryp)));
+                
+                return ClienteDTO.build(encryptServ.decryptCliente(clienteRepository.save(encryptServ.encryptCliente(cliente))));
             }
             return null;
         } catch (Exception e) {

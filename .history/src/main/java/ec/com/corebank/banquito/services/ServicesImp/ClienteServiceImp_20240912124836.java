@@ -45,7 +45,7 @@ public class ClienteServiceImp implements ClienteServInterface {
 
        return clientes
                 .stream()
-                .map(u -> ClienteDTO.build(encryptServ.decryptCliente(u)))
+                .map(u -> ClienteDTO.build(decryptUser(u)))
                 .collect(Collectors.toList());
         
     }
@@ -60,7 +60,7 @@ public class ClienteServiceImp implements ClienteServInterface {
             clienteDTO = clienteRepository
                     .findByClienteid(clienteId)
                     .map(u -> {
-                       return ClienteDTO.build(encryptServ.decryptCliente(u));
+                       return ClienteDTO.build(decryptUser(u));
                     });
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,8 +77,8 @@ public class ClienteServiceImp implements ClienteServInterface {
             Optional <Persona> personaValidation = personaRepository.findByIdentificacion(cliente.getIdentificacion());
             
             if(!personaValidation.isPresent()){
-                Cliente  clienteencryp = encryptServ.encryptCliente(cliente);
-                return ClienteDTO.build(encryptServ.decryptCliente(clienteRepository.save(clienteencryp)));
+                
+                return ClienteDTO.build(decryptUser(clienteRepository.save(encryptUser(cliente))));
             }
             return null;
         } catch (Exception e) {
@@ -95,7 +95,7 @@ public class ClienteServiceImp implements ClienteServInterface {
             //Busca cliente
             Optional<Cliente> clienteOpt = clienteRepository.findByClienteid(clienteId);
             if (clienteOpt.isPresent()) {
-                Cliente existingCliente = encryptServ.decryptCliente(clienteOpt.get());
+                Cliente existingCliente = decryptUser(clienteOpt.get());
                 // Actualiza los campos del cliente existente con los valores del nuevo cliente.
                 existingCliente.setNombre(cliente.getNombre());
                 existingCliente.setGenero(cliente.getGenero());
@@ -106,8 +106,8 @@ public class ClienteServiceImp implements ClienteServInterface {
                 existingCliente.setContrasena(cliente.getContrasena());
                 existingCliente.setEstado(cliente.getEstado());
                 // Guarda los cambios
-                clienteRepository.save(encryptServ.encryptCliente(existingCliente));
-                return Optional.of(ClienteDTO.build(encryptServ.decryptCliente(existingCliente)));
+                clienteRepository.save(e(existingCliente));
+                return Optional.of(ClienteDTO.build(existingCliente));
             } else {
                 return Optional.empty(); // O lanza una excepción indicando que el cliente no fue encontrado.
             }
@@ -134,5 +134,46 @@ public class ClienteServiceImp implements ClienteServInterface {
         }
     }
     
+
+    //Encripta clientes 
+    public Cliente  encryptCliente (Cliente cliente){
+        Cliente clienteenc = new Cliente();
+        try {
+            clienteenc.setIdentificacion(cliente.getIdentificacion());
+            clienteenc.setNombre(encryptServ.encrypt(cliente.getNombre()));
+            clienteenc.setTelefono(encryptServ.encrypt(cliente.getTelefono()));
+            clienteenc.setDireccion(encryptServ.encrypt(cliente.getDireccion()));
+            clienteenc.setContrasena(cliente.getContrasena());
+            clienteenc.setEstado(cliente.getEstado());
+            clienteenc.setGenero(cliente.getGenero());
+            clienteenc.setEdad(cliente.getEdad());
+            clienteenc.setClienteid(cliente.getClienteid());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return clienteenc;
+
+    } 
+    //Desencripta clientes
+    public Cliente decryptCliente (Cliente cliente) {
+        Cliente clientedec = new Cliente();
+        try {
+            clientedec.setIdentificacion(cliente.getIdentificacion());
+            clientedec.setNombre(encryptServ.decrypt(cliente.getNombre()));
+            clientedec.setTelefono(encryptServ.decrypt(cliente.getTelefono()));
+            clientedec.setDireccion(encryptServ.decrypt(cliente.getDireccion()));
+            clientedec.setContrasena(cliente.getContrasena());
+            clientedec.setEstado(cliente.getEstado());
+            clientedec.setGenero(cliente.getGenero());
+            clientedec.setEdad(cliente.getEdad());
+            clientedec.setClienteid(cliente.getClienteid());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return clientedec;
+    }
 
 }

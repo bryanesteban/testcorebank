@@ -45,7 +45,7 @@ public class ClienteServiceImp implements ClienteServInterface {
 
        return clientes
                 .stream()
-                .map(u -> ClienteDTO.build(encryptServ.decryptCliente(u)))
+                .map(u -> ClienteDTO.build(u))
                 .collect(Collectors.toList());
         
     }
@@ -59,9 +59,7 @@ public class ClienteServiceImp implements ClienteServInterface {
         try {
             clienteDTO = clienteRepository
                     .findByClienteid(clienteId)
-                    .map(u -> {
-                       return ClienteDTO.build(encryptServ.decryptCliente(u));
-                    });
+                    .map(ClienteDTO::build);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error al buscar el cliente con ID: " + clienteId + " - " + e.getMessage());
@@ -77,8 +75,8 @@ public class ClienteServiceImp implements ClienteServInterface {
             Optional <Persona> personaValidation = personaRepository.findByIdentificacion(cliente.getIdentificacion());
             
             if(!personaValidation.isPresent()){
-                Cliente  clienteencryp = encryptServ.encryptCliente(cliente);
-                return ClienteDTO.build(encryptServ.decryptCliente(clienteRepository.save(clienteencryp)));
+                
+                return ClienteDTO.build(clienteRepository.save(cliente));
             }
             return null;
         } catch (Exception e) {
@@ -95,7 +93,7 @@ public class ClienteServiceImp implements ClienteServInterface {
             //Busca cliente
             Optional<Cliente> clienteOpt = clienteRepository.findByClienteid(clienteId);
             if (clienteOpt.isPresent()) {
-                Cliente existingCliente = encryptServ.decryptCliente(clienteOpt.get());
+                Cliente existingCliente = clienteOpt.get();
                 // Actualiza los campos del cliente existente con los valores del nuevo cliente.
                 existingCliente.setNombre(cliente.getNombre());
                 existingCliente.setGenero(cliente.getGenero());
@@ -106,8 +104,8 @@ public class ClienteServiceImp implements ClienteServInterface {
                 existingCliente.setContrasena(cliente.getContrasena());
                 existingCliente.setEstado(cliente.getEstado());
                 // Guarda los cambios
-                clienteRepository.save(encryptServ.encryptCliente(existingCliente));
-                return Optional.of(ClienteDTO.build(encryptServ.decryptCliente(existingCliente)));
+                clienteRepository.save(existingCliente);
+                return Optional.of(ClienteDTO.build(existingCliente));
             } else {
                 return Optional.empty(); // O lanza una excepción indicando que el cliente no fue encontrado.
             }

@@ -116,7 +116,7 @@ public class movimientoService implements MovimientosServInterface {
         return movimientosLista.stream()
             .map(movimiento -> {
                 Cuenta cuenta = movimiento.getCuenta();
-                Cliente cliente = encryptServ.decryptCliente(cuenta.getCliente());
+                Cliente cliente = cuenta.getCliente();
                 return MovimientosDTO.build(cliente, cuenta, movimiento);
             })
             .collect(Collectors.toList());
@@ -154,7 +154,7 @@ public class movimientoService implements MovimientosServInterface {
                             newmovimiento.setSaldo(String.valueOf(saldoMovimiento));
                             newmovimiento.setValor(movimiento.getValor());
                             Movimientos movimientoagregado = movimientoRepository.save(newmovimiento);
-                            movimientoResultado = MovimientosDTO.build(encryptServ.decryptCliente(clientevinculado), cuentavinculada, movimientoagregado);
+                            movimientoResultado = MovimientosDTO.build(clientevinculado, cuentavinculada, movimientoagregado);
                         }
                           
                     }else{
@@ -198,7 +198,7 @@ public class movimientoService implements MovimientosServInterface {
                 movimientobd.setSaldo(String.valueOf(saldoMovimiento));
                 movimientobd.setValor(movimiento.getValor());
                 Movimientos movimientoagregado = movimientoRepository.save(movimientobd);
-                movimientoResultado = Optional.of(MovimientosDTO.build(encryptServ.decryptCliente(clientebd), cuentabd, movimientoagregado));
+                movimientoResultado = Optional.of(MovimientosDTO.build(clientebd, cuentabd, movimientoagregado));
             }
 
             return movimientoResultado;
