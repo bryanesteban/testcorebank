@@ -20,13 +20,13 @@ public class Transaccion {
 
     @NotBlank
     @Column(name = "descripcion")
-    @Size(max = 30)
+    @Size(min = 4, max = 30)
     private String descripcion;
 
 
     @NotBlank
     @Column(name = "formula")
-    @Size(max = 30)
+    @Size(min = 4, max = 30)
     private String formula;
 
 
