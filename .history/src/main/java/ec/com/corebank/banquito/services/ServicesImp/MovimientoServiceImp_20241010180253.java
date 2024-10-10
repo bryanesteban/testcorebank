@@ -89,9 +89,10 @@ public class MovimientoServiceImp implements MovimientoInterface {
             }
         }catch (NumberFormatException e) {
             System.out.println("Error al convertir los valores numéricos: " + e.getMessage());
-
+            e.printStackTrace();
         } catch (Exception e) {
             System.out.println("Ocurrió un error al obtener el movimiento: " + e.getMessage());
+            e.printStackTrace();
         }
 
         return Optional.of(movimientoDTO);
@@ -161,13 +162,16 @@ public class MovimientoServiceImp implements MovimientoInterface {
              return  movimientoResultado;  
 
         }catch (ManagmentException e) {
+            // Propagar la excepción de saldo insuficiente
             throw e;
         }
         catch (DataIntegrityViolationException e) {
-
+        // Manejar violación de integridad de datos
+        e.printStackTrace();
         throw new RuntimeException("Error de integridad de datos: " + e.getLocalizedMessage());
         } catch (Exception e) {
-
+            // Manejar otras excepciones
+            e.printStackTrace();
             throw new RuntimeException("Error al guardar cuenta: " + e.getLocalizedMessage());
         }
     }
@@ -196,6 +200,7 @@ public class MovimientoServiceImp implements MovimientoInterface {
 
             return movimientoResultado;
         }  catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Error al actualizar el Movimiento con numero:"+ idMovimiento+ " - " + e.getMessage());
         }
 
@@ -214,7 +219,7 @@ public class MovimientoServiceImp implements MovimientoInterface {
             }
 
         } catch (Exception e) {
-
+            e.printStackTrace();
             throw new RuntimeException("Error al eliminar el movimiento con numero: " + idMovimiento + " - " + e.getMessage());
         }
     }

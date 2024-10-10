@@ -61,7 +61,7 @@ public class ClienteServiceImp implements ClienteInterface {
                        return ClienteDTO.build(u);
                     });
         } catch (Exception e) {
-           
+            e.printStackTrace();
             throw new RuntimeException("Error al buscar el cliente con ID: " + clienteId + " - " + e.getMessage());
         }
         
@@ -80,7 +80,7 @@ public class ClienteServiceImp implements ClienteInterface {
             }
             return null;
         } catch (Exception e) {
-
+            e.printStackTrace();
             throw new RuntimeException("Error el cliente ya existe: " + e.getMessage());
         }
 
@@ -110,7 +110,7 @@ public class ClienteServiceImp implements ClienteInterface {
                 return Optional.empty(); // O lanza una excepción indicando que el cliente no fue encontrado.
             }
         } catch (Exception e) {
-  
+            e.printStackTrace();
             throw new RuntimeException("Error al actualizar el cliente con ID: " + clienteId + " - " + e.getMessage());
         }
     }
@@ -127,6 +127,7 @@ public class ClienteServiceImp implements ClienteInterface {
                 throw new RuntimeException("Cliente con ID: " + clienteId + " no encontrado.");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Error al eliminar el cliente con ID: " + clienteId + " - " + e.getMessage());
         }
     }
