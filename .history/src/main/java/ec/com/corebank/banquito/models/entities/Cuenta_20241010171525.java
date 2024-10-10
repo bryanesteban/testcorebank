@@ -42,8 +42,10 @@ public class Cuenta {
     @Column(name = "saldoinicial")
     private String saldoinicial;
 
+
     @Column(name = "estado")
     private boolean estado;
+
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "clienteid", nullable = false, referencedColumnName = "clienteid")

@@ -25,7 +25,7 @@ import ec.com.corebank.banquito.config.ManagmentException;
 import ec.com.corebank.banquito.models.DTO.ErrorResponse;
 import ec.com.corebank.banquito.models.DTO.MovimientoDTO;
 import ec.com.corebank.banquito.models.entities.Movimiento;
-import ec.com.corebank.banquito.services.ServInterface.MovimientoInterface;
+import ec.com.corebank.banquito.services.ServInterface.MovimientosServInterface;
 
 @RestController
 @RequestMapping("/movimientos")
@@ -34,7 +34,7 @@ public class MovimientoController {
 
 
     @Autowired
-    private MovimientoInterface movimientoService;
+    private MovimientosServInterface movimientoService;
 
 
 

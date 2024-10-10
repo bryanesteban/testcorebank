@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.corebank.banquito.config.ManagmentException;
 import ec.com.corebank.banquito.models.DTO.ErrorResponse;
-import ec.com.corebank.banquito.models.DTO.MovimientoDTO;
+import ec.com.corebank.banquito.models.DTO.MovimientosDTO;
 import ec.com.corebank.banquito.models.entities.Movimiento;
-import ec.com.corebank.banquito.services.ServInterface.MovimientoInterface;
+import ec.com.corebank.banquito.services.ServInterface.MovimientosServInterface;
 
 @RestController
 @RequestMapping("/movimientos")
@@ -34,7 +34,7 @@ public class MovimientoController {
 
 
     @Autowired
-    private MovimientoInterface movimientoService;
+    private MovimientosServInterface movimientoService;
 
 
 
@@ -42,7 +42,7 @@ public class MovimientoController {
     @GetMapping
     public ResponseEntity<?> getMovimientos(){
         try {
-            List<MovimientoDTO> movimientos = movimientoService.findAll();
+            List<MovimientosDTO> movimientos = movimientoService.findAll();
             return new ResponseEntity<>(movimientos, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -55,7 +55,7 @@ public class MovimientoController {
     @GetMapping("/{idMovimientos}")
     public ResponseEntity<?> getBusquedaMovimiento(@PathVariable("idMovimientos") Long idMovimientos){
         try {
-            Optional<MovimientoDTO> movimiento = movimientoService.findByidMovimiento(idMovimientos);
+            Optional<MovimientosDTO> movimiento = movimientoService.findByidMovimiento(idMovimientos);
             return movimiento.map(ResponseEntity::ok)
                                 .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
@@ -71,7 +71,7 @@ public class MovimientoController {
             @RequestParam("fechaInicio") String fechaInicio,
             @RequestParam("fechaFin") String fechaFin) {
         try {
-            List<MovimientoDTO> movimientos = movimientoService.findMovimientosByFechaRange(fechaInicio, fechaFin);
+            List<MovimientosDTO> movimientos = movimientoService.findMovimientosByFechaRange(fechaInicio, fechaFin);
             return new ResponseEntity<>(movimientos, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,7 +81,7 @@ public class MovimientoController {
 
 
     @PostMapping
-    public ResponseEntity<?> crearMovimiento(@RequestBody MovimientoDTO movimiento, BindingResult result)
+    public ResponseEntity<?> crearMovimiento(@RequestBody MovimientosDTO movimiento, BindingResult result)
     {
         System.out.println("tipo de movimiento:"+movimiento.getTipomovimiento());
 
@@ -91,7 +91,7 @@ public class MovimientoController {
 
 
         try {
-            MovimientoDTO guardarmovimiento = movimientoService.saveMovimiento(movimiento);
+            MovimientosDTO guardarmovimiento = movimientoService.saveMovimiento(movimiento);
             return new ResponseEntity<>(guardarmovimiento, HttpStatus.CREATED);
         } catch (ManagmentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("Saldo insuficiente", e.getMessage()));
@@ -106,7 +106,7 @@ public class MovimientoController {
     {
      
         try {
-            Optional<MovimientoDTO> updateMovimiento = movimientoService.updateMovimiento(movimiento, idMovimientos);
+            Optional<MovimientosDTO> updateMovimiento = movimientoService.updateMovimiento(movimiento, idMovimientos);
             return updateMovimiento.map(ResponseEntity::ok)
                                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
        
