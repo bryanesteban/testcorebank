@@ -58,7 +58,7 @@ public class MovimientoServiceImp implements MovimientoInterface {
 
 
         }catch( Exception e){
-            throw new ResourceNotFoundException("Error al devolver los movimientos: "+e.getMessage());
+            throw new RuntimeException("Error al devolver los movimientos: "+e.getMessage());
         }
 
         return movimientos;
@@ -79,7 +79,7 @@ public class MovimientoServiceImp implements MovimientoInterface {
                 Movimiento movimientoConsulta = optionalMovimiento.get();
     
                 if(movimientoConsulta.getCuenta() == null){
-                    throw new ResourceNotFoundException("No se encontró una cuenta asociada al movimiento ID: " + idmovimiento);
+                    throw new RuntimeException("No se encontró una cuenta asociada al movimiento ID: " + idmovimiento);
                 }
 
                 Cuenta cuenta = movimientoConsulta.getCuenta();

@@ -39,7 +39,7 @@ public class ClienteServiceImp implements ClienteInterface {
         clientes = clienteRepository.findByEstadoTrue();
 
        } catch (Exception e) {
-        throw new ResourceNotFoundException("Error al devolver los clientes");
+        throw new RuntimeException("Error al devolver los clientes");
        }
        
 

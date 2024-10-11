@@ -10,7 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ec.com.corebank.banquito.ErrorManagment.ResourceNotFoundException;
+
 import ec.com.corebank.banquito.models.DTO.CuentaDTO;
 import ec.com.corebank.banquito.models.entities.Cliente;
 import ec.com.corebank.banquito.models.entities.Cuenta;
@@ -39,8 +39,7 @@ public class CuentaServiceImp implements CuentaInterface {
         try{
             cuentas = (List<Cuenta>) cuentaRepository.findAll();
         }catch(Exception e){
-            throw new ResourceNotFoundException("Error al buscar todas las cuentas");
-
+            e.printStackTrace();
         }
     
         return cuentas
@@ -64,7 +63,8 @@ public class CuentaServiceImp implements CuentaInterface {
                          
                     
         } catch (Exception e) {
-            throw new ResourceNotFoundException("Error al buscar la cuenta con ID: " + idCuenta + " - " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error al buscar la cuenta con ID: " + idCuenta + " - " + e.getMessage());
 
         }
 
@@ -78,17 +78,17 @@ public class CuentaServiceImp implements CuentaInterface {
             Optional <Cuenta> cuentaValidacion = cuentaRepository.findByNumerocuenta(cuentaDTO.getNumeroCuenta());
             
             Cliente cliente = clienteRepository.findByClienteid(cuentaDTO.getClienteId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
             
 
 
             if(!cuentaValidacion.isPresent()){
                 Cuenta cuenta = new Cuenta();
-                cuenta.setNumerocuenta(cuentaDTO.getNumeroCuenta());
+                cuenta.setNumeroCuenta(cuentaDTO.getNumeroCuenta());
                 cuenta.setCliente(cliente);
                 cuenta.setEstado(cuentaDTO.isEstado());
                 cuenta.setSaldoinicial(cuentaDTO.getSaldoinicial());
-                cuenta.setTipocuenta(cuentaDTO.getTipoCuenta());
+                cuenta.setTipoCuenta(cuentaDTO.getTipoCuenta());
 
 
                 return CuentaDTO.build(cuentaRepository.save(cuenta));
@@ -96,11 +96,12 @@ public class CuentaServiceImp implements CuentaInterface {
             return null;
         } catch (DataIntegrityViolationException e) {
         // Manejar violación de integridad de datos
-
-        throw new ResourceNotFoundException("Error de integridad de datos: " + e.getLocalizedMessage());
+        e.printStackTrace();
+        throw new RuntimeException("Error de integridad de datos: " + e.getLocalizedMessage());
         } catch (Exception e) {
             // Manejar otras excepciones
-            throw new ResourceNotFoundException("Error al guardar cuenta: " + e.getLocalizedMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error al guardar cuenta: " + e.getLocalizedMessage());
         }
     }
 
@@ -113,9 +114,9 @@ public class CuentaServiceImp implements CuentaInterface {
             if(verificaCuenta.isPresent()){
                 Cuenta cuentaDb = verificaCuenta.get();
 
-                cuentaDb.setTipocuenta(cuenta.getTipocuenta());
+                cuentaDb.setTipoCuenta(cuenta.getTipoCuenta());
                 cuentaDb.setSaldoinicial(cuentaDb.getSaldoinicial());
-                cuentaDb.setEstado(cuenta.isEstado());
+                cuentaDb.setEstado(cuenta.getEstado());
 
 
                 cuentaRepository.save(cuentaDb);
@@ -125,7 +126,8 @@ public class CuentaServiceImp implements CuentaInterface {
                 return Optional.empty();
             }
         } catch (Exception e) {
-            throw new ResourceNotFoundException("Error al actualizar la cuenta con numero:"+ numeroCuenta+ " - " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error al actualizar la cuenta con numero:"+ numeroCuenta+ " - " + e.getMessage());
         }
     }
 
@@ -137,10 +139,11 @@ public class CuentaServiceImp implements CuentaInterface {
             if(verificaCuenta.isPresent()){
                 cuentaRepository.delete(verificaCuenta.get());
             }else{
-                    throw new ResourceNotFoundException("Cuenta con numero:"+ numeroCuenta+"no encontrada!");
+                    throw new RuntimeException("Cuenta con numero:"+ numeroCuenta+"no encontrada!");
             }
         } catch (Exception e) {
-            throw new ResourceNotFoundException("Error al eliminar la cuenta con numero: " + numeroCuenta + " - " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error al eliminar la cuenta con numero: " + numeroCuenta + " - " + e.getMessage());
         }
     }
 

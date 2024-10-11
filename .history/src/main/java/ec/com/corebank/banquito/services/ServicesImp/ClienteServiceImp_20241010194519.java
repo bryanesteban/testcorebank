@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ec.com.corebank.banquito.ErrorManagment.InvalidDataException;
 import ec.com.corebank.banquito.ErrorManagment.ResourceNotFoundException;
 import ec.com.corebank.banquito.models.DTO.ClienteDTO;
 import ec.com.corebank.banquito.models.entities.Cliente;
@@ -39,7 +38,7 @@ public class ClienteServiceImp implements ClienteInterface {
         clientes = clienteRepository.findByEstadoTrue();
 
        } catch (Exception e) {
-        throw new ResourceNotFoundException("Error al devolver los clientes");
+        throw new RuntimeException("Error al devolver los clientes");
        }
        
 
@@ -83,7 +82,7 @@ public class ClienteServiceImp implements ClienteInterface {
             return null;
         } catch (Exception e) {
 
-            throw new ResourceNotFoundException("Error el cliente ya existe: " + e.getMessage());
+            throw new RuntimeException("Error el cliente ya existe: " + e.getMessage());
         }
 
     }
@@ -113,7 +112,7 @@ public class ClienteServiceImp implements ClienteInterface {
             }
         } catch (Exception e) {
   
-            throw new ResourceNotFoundException("Error al actualizar el cliente con ID: " + clienteId + " - " + e.getMessage());
+            throw new RuntimeException("Error al actualizar el cliente con ID: " + clienteId + " - " + e.getMessage());
         }
     }
 
@@ -126,10 +125,10 @@ public class ClienteServiceImp implements ClienteInterface {
                 clienteRepository.delete(clienteOpt.get());
             } else {
                 
-                throw new ResourceNotFoundException("Cliente con ID: " + clienteId + " no encontrado.");
+                throw new RuntimeException("Cliente con ID: " + clienteId + " no encontrado.");
             }
         } catch (Exception e) {
-            throw new InvalidDataException("Error al eliminar el cliente con ID: " + clienteId + " - " + e.getMessage());
+            throw new RuntimeException("Error al eliminar el cliente con ID: " + clienteId + " - " + e.getMessage());
         }
     }
     

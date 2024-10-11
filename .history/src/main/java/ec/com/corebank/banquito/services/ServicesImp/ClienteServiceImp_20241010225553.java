@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ec.com.corebank.banquito.ErrorManagment.InvalidDataException;
-import ec.com.corebank.banquito.ErrorManagment.ResourceNotFoundException;
 import ec.com.corebank.banquito.models.DTO.ClienteDTO;
 import ec.com.corebank.banquito.models.entities.Cliente;
 import ec.com.corebank.banquito.models.entities.Persona;
@@ -39,7 +37,7 @@ public class ClienteServiceImp implements ClienteInterface {
         clientes = clienteRepository.findByEstadoTrue();
 
        } catch (Exception e) {
-        throw new ResourceNotFoundException("Error al devolver los clientes");
+            e.printStackTrace();
        }
        
 
@@ -63,8 +61,8 @@ public class ClienteServiceImp implements ClienteInterface {
                        return ClienteDTO.build(u);
                     });
         } catch (Exception e) {
-           
-            throw new ResourceNotFoundException("Error al buscar el cliente con ID: " + clienteId + " - " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error al buscar el cliente con ID: " + clienteId + " - " + e.getMessage());
         }
         
         return clienteDTO;
@@ -82,8 +80,8 @@ public class ClienteServiceImp implements ClienteInterface {
             }
             return null;
         } catch (Exception e) {
-
-            throw new ResourceNotFoundException("Error el cliente ya existe: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error el cliente ya existe: " + e.getMessage());
         }
 
     }
@@ -105,6 +103,7 @@ public class ClienteServiceImp implements ClienteInterface {
                 existingCliente.setTelefono(cliente.getTelefono());
                 existingCliente.setContrasena(cliente.getContrasena());
                 existingCliente.setEstado(cliente.getEstado());
+
                 // Guarda los cambios
                 clienteRepository.save(existingCliente);
                 return Optional.of(ClienteDTO.build(existingCliente));
@@ -112,8 +111,8 @@ public class ClienteServiceImp implements ClienteInterface {
                 return Optional.empty(); // O lanza una excepción indicando que el cliente no fue encontrado.
             }
         } catch (Exception e) {
-  
-            throw new ResourceNotFoundException("Error al actualizar el cliente con ID: " + clienteId + " - " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error al actualizar el cliente con ID: " + clienteId + " - " + e.getMessage());
         }
     }
 
@@ -126,10 +125,11 @@ public class ClienteServiceImp implements ClienteInterface {
                 clienteRepository.delete(clienteOpt.get());
             } else {
                 
-                throw new ResourceNotFoundException("Cliente con ID: " + clienteId + " no encontrado.");
+                throw new RuntimeException("Cliente con ID: " + clienteId + " no encontrado.");
             }
         } catch (Exception e) {
-            throw new InvalidDataException("Error al eliminar el cliente con ID: " + clienteId + " - " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error al eliminar el cliente con ID: " + clienteId + " - " + e.getMessage());
         }
     }
     

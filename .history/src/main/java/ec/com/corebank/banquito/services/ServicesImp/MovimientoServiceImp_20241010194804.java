@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ec.com.corebank.banquito.ErrorManagment.ResourceNotFoundException;
+import ec.com.corebank.banquito.config.ManagmentException;
 import ec.com.corebank.banquito.models.DTO.MovimientoDTO;
 import ec.com.corebank.banquito.models.entities.Cliente;
 import ec.com.corebank.banquito.models.entities.Cuenta;
@@ -58,7 +59,7 @@ public class MovimientoServiceImp implements MovimientoInterface {
 
 
         }catch( Exception e){
-            throw new ResourceNotFoundException("Error al devolver los movimientos: "+e.getMessage());
+            throw new RuntimeException("Error al devolver los movimientos: "+e.getMessage());
         }
 
         return movimientos;
@@ -79,7 +80,7 @@ public class MovimientoServiceImp implements MovimientoInterface {
                 Movimiento movimientoConsulta = optionalMovimiento.get();
     
                 if(movimientoConsulta.getCuenta() == null){
-                    throw new ResourceNotFoundException("No se encontró una cuenta asociada al movimiento ID: " + idmovimiento);
+                    throw new RuntimeException("No se encontró una cuenta asociada al movimiento ID: " + idmovimiento);
                 }
 
                 Cuenta cuenta = movimientoConsulta.getCuenta();

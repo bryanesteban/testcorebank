@@ -137,7 +137,7 @@ public class CuentaServiceImp implements CuentaInterface {
             if(verificaCuenta.isPresent()){
                 cuentaRepository.delete(verificaCuenta.get());
             }else{
-                    throw new ResourceNotFoundException("Cuenta con numero:"+ numeroCuenta+"no encontrada!");
+                    throw new InvalidDataException("Cuenta con numero:"+ numeroCuenta+"no encontrada!");
             }
         } catch (Exception e) {
             throw new ResourceNotFoundException("Error al eliminar la cuenta con numero: " + numeroCuenta + " - " + e.getMessage());
