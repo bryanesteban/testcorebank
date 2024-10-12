@@ -47,7 +47,7 @@ public class ClienteServiceImp implements ClienteInterface {
 			        throw new CustomException("Lista de clientes vacía", HttpStatus.NOT_FOUND);
 		}
 
-        return clientListDTO;
+         return clientListDTO;
         
     }
 
@@ -56,11 +56,7 @@ public class ClienteServiceImp implements ClienteInterface {
     public Optional<ClienteDTO> findByIdClient(String clienteId) {
         
         Optional<ClienteDTO> clienteDTO;
-        Persona personFound = personaRepository.findByIdentificacion(clienteId);
-        if(persona == null) {
-			throw new CustomException("Persona no encontrada", HttpStatus.NOT_FOUND);
-		}
-        
+    
         try {
             clienteDTO = clienteRepository
                     .findByClienteid(clienteId)

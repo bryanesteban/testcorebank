@@ -56,7 +56,7 @@ public class ClienteServiceImp implements ClienteInterface {
     public Optional<ClienteDTO> findByIdClient(String clienteId) {
         
         Optional<ClienteDTO> clienteDTO;
-        Persona personFound = personaRepository.findByIdentificacion(clienteId);
+        Peronsa personFound = personaRepository.findByIdentificacion(clienteId);
         if(persona == null) {
 			throw new CustomException("Persona no encontrada", HttpStatus.NOT_FOUND);
 		}

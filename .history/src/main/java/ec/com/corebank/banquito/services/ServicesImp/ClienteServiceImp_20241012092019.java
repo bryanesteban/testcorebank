@@ -5,11 +5,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ec.com.corebank.banquito.ErrorManagment.CustomException;
+
 import ec.com.corebank.banquito.ErrorManagment.ResourceNotFoundException;
 import ec.com.corebank.banquito.models.DTO.ClienteDTO;
 import ec.com.corebank.banquito.models.entities.Cliente;
@@ -36,18 +35,18 @@ public class ClienteServiceImp implements ClienteInterface {
       
         List <Cliente> clientes = new ArrayList<>();
         
-        clientes = clienteRepository.findByEstadoTrue(); 
+      try {
+        clientes = clienteRepository.findByEstadoTrue();
 
-        List<ClienteDTO> clientListDTO =  clientes
-                                        .stream()
-                                        .map(u -> ClienteDTO.build(u))
-                                        .collect(Collectors.toList());
-                   
-                    if(clientes == null || clientes.size() == 0) {
-			        throw new CustomException("Lista de clientes vacía", HttpStatus.NOT_FOUND);
-		}
+       } catch (Exception e) {
+        throw new ResourceNotFoundException("Error al devolver los clientes");
+       }
+       
 
-        return clientListDTO;
+       return clientes
+                .stream()
+                .map(u -> ClienteDTO.build(u))
+                .collect(Collectors.toList());
         
     }
 
@@ -56,11 +55,7 @@ public class ClienteServiceImp implements ClienteInterface {
     public Optional<ClienteDTO> findByIdClient(String clienteId) {
         
         Optional<ClienteDTO> clienteDTO;
-        Persona personFound = personaRepository.findByIdentificacion(clienteId);
-        if(persona == null) {
-			throw new CustomException("Persona no encontrada", HttpStatus.NOT_FOUND);
-		}
-        
+    
         try {
             clienteDTO = clienteRepository
                     .findByClienteid(clienteId)
