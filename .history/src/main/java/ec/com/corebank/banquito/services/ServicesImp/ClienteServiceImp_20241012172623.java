@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ec.com.corebank.banquito.ErrorManagment.CustomException;
+import ec.com.corebank.banquito.ErrorManagment.ResourceNotFoundException;
 import ec.com.corebank.banquito.models.DTO.ClienteDTO;
 import ec.com.corebank.banquito.models.entities.Cliente;
 import ec.com.corebank.banquito.models.entities.Persona;
@@ -63,7 +64,7 @@ public class ClienteServiceImp implements ClienteInterface {
         });
 
         if(!clienteDTO.isPresent()) {
-            throw new CustomException("Error al buscar el cliente con ID " , HttpStatus.NOT_FOUND);
+            throw new CustomException("Error al buscar el cliente con ID: " , HttpStatus.NOT_FOUND);
         }
 
     

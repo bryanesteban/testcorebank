@@ -110,11 +110,6 @@ public class MovimientoServiceImp implements MovimientoInterface {
         
         List<Movimiento> movimientosLista = movimientoRepository.findByFechamovimientoBetween(startDate, endDate);
         
-        if(movimientosLista == null || movimientosLista.size() == 0)
-            {
-                throw new CustomException("No se encontraron movimientos", HttpStatus.NOT_FOUND );
-            }
-
         return movimientosLista.stream()
             .map(movimiento -> {
                 Cuenta cuenta = movimiento.getCuenta();
@@ -131,7 +126,7 @@ public class MovimientoServiceImp implements MovimientoInterface {
         
         MovimientoDTO movimientoResultado = null;
         
-
+        try{
                 Optional<Movimiento> verificaMovimiento = movimientoRepository.findByIdmovimiento(movimiento.getIdmovimiento());
                 Optional<Transaccion> optionalAccion = transaccionRepository.findByDescripcion(movimiento.getTipomovimiento());
                 if(!verificaMovimiento.isPresent()){
@@ -161,11 +156,15 @@ public class MovimientoServiceImp implements MovimientoInterface {
                         }
                           
                     }else{
-                        throw new CustomException("Saldo insuficiente para realizar la operación." , HttpStatus.NOT_FOUND);
+                        throw new ResourceNotFoundException("Saldo insuficiente para realizar la operación.");
                     }
 
                 }
              return  movimientoResultado;  
+
+        }catch (ResourceNotFoundException e) {
+            throw e;
+        }
     }
 
     @Override
@@ -174,6 +173,7 @@ public class MovimientoServiceImp implements MovimientoInterface {
         
         Optional<MovimientoDTO> movimientoResultado = null;
         
+        try {
             Optional<Movimiento> verificaMovimiento = movimientoRepository.findByIdmovimiento(idMovimiento);
 
             if(verificaMovimiento.isPresent()){
@@ -187,31 +187,39 @@ public class MovimientoServiceImp implements MovimientoInterface {
                 movimientobd.setValor(movimiento.getValor());
                 Movimiento movimientoagregado = movimientoRepository.save(movimientobd);
                 movimientoResultado = Optional.of(MovimientoDTO.build(clientebd, cuentabd, movimientoagregado));
-
-                return movimientoResultado;
-            }else {
-                throw new CustomException("Error al actualizar el Movimiento con numero:"+ idMovimiento, HttpStatus.NOT_FOUND);
             }
 
-
+            return movimientoResultado;
+        }  catch (Exception e) {
+            throw new ResourceNotFoundException("Error al actualizar el Movimiento con numero:"+ idMovimiento+ " - " + e.getMessage());
+        }
 
     }
 
     @Override
     @Transactional
     public void removeMovimiento(Long idMovimiento) {
-        
+        try {
             Optional<Movimiento> verificaMovimiento = movimientoRepository.findByIdmovimiento(idMovimiento);
 
             if(verificaMovimiento.isPresent()){
                 movimientoRepository.delete(verificaMovimiento.get());
             }else{
-                    throw new RuntimeException("Movimiento con numero: "+idMovimiento+",no encontrada!");
+                    throw new RuntimeException("Movimiento con numero: "+idMovimiento+"no encontrada!");
             }
 
+        } catch (Exception e) {
+
+            throw new ResourceNotFoundException("Error al eliminar el movimiento con numero: " + idMovimiento + " - " + e.getMessage());
+        }
     }
 
 
+    public static String getCurrentDate() {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
+        return today.format(formatter);
+    }
 
     
 }

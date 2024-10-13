@@ -126,14 +126,16 @@ public class CuentaServiceImp implements CuentaInterface {
     @Override
     @Transactional
     public void removeCuenta(String numeroCuenta) {
-        
+        try {
             Optional<Cuenta> verificaCuenta = cuentaRepository.findByNumerocuenta(numeroCuenta);
             if(verificaCuenta.isPresent()){
                 cuentaRepository.delete(verificaCuenta.get());
             }else{
-                    throw new CustomException("Cuenta con numero:"+ numeroCuenta+"no encontrada!", HttpStatus.NOT_FOUND);
+                    throw new ResourceNotFoundException("Cuenta con numero:"+ numeroCuenta+"no encontrada!");
             }
-       
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Error al eliminar la cuenta con numero: " + numeroCuenta + " - " + e.getMessage());
+        }
     }
 
     

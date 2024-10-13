@@ -104,7 +104,7 @@ public class CuentaServiceImp implements CuentaInterface {
     @Override
     @Transactional
     public Optional<CuentaDTO> updateCuenta(Cuenta cuenta, String numeroCuenta) {
-
+        try {
             Optional<Cuenta> verificaCuenta = cuentaRepository.findByNumerocuenta(numeroCuenta);
             
             if(verificaCuenta.isPresent()){
@@ -119,21 +119,26 @@ public class CuentaServiceImp implements CuentaInterface {
                 
                 return Optional.of(CuentaDTO.build(cuentaDb));
             }else {
-                throw new CustomException("Error al actualizar la cuenta con numero:"+ numeroCuenta, HttpStatus.NOT_FOUND );
+                return Optional.empty();
             }
-    }  
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Error al actualizar la cuenta con numero:"+ numeroCuenta+ " - " + e.getMessage());
+        }
+    }
 
     @Override
     @Transactional
     public void removeCuenta(String numeroCuenta) {
-        
+        try {
             Optional<Cuenta> verificaCuenta = cuentaRepository.findByNumerocuenta(numeroCuenta);
             if(verificaCuenta.isPresent()){
                 cuentaRepository.delete(verificaCuenta.get());
             }else{
-                    throw new CustomException("Cuenta con numero:"+ numeroCuenta+"no encontrada!", HttpStatus.NOT_FOUND);
+                    throw new ResourceNotFoundException("Cuenta con numero:"+ numeroCuenta+"no encontrada!");
             }
-       
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Error al eliminar la cuenta con numero: " + numeroCuenta + " - " + e.getMessage());
+        }
     }
 
     

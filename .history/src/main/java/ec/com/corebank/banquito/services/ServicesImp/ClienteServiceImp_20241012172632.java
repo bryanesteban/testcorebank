@@ -63,7 +63,7 @@ public class ClienteServiceImp implements ClienteInterface {
         });
 
         if(!clienteDTO.isPresent()) {
-            throw new CustomException("Error al buscar el cliente con ID " , HttpStatus.NOT_FOUND);
+            throw new CustomException("Error al buscar el cliente con ID: " , HttpStatus.NOT_FOUND);
         }
 
     

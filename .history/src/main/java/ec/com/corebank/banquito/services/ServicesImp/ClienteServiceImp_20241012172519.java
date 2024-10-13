@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ec.com.corebank.banquito.ErrorManagment.CustomException;
+import ec.com.corebank.banquito.ErrorManagment.ResourceNotFoundException;
 import ec.com.corebank.banquito.models.DTO.ClienteDTO;
 import ec.com.corebank.banquito.models.entities.Cliente;
 import ec.com.corebank.banquito.models.entities.Persona;
@@ -63,7 +64,7 @@ public class ClienteServiceImp implements ClienteInterface {
         });
 
         if(!clienteDTO.isPresent()) {
-            throw new CustomException("Error al buscar el cliente con ID " , HttpStatus.NOT_FOUND);
+            throw new CustomException("Error al buscar el cliente con ID: " , HttpStatus.NOT_FOUND);
         }
 
     
@@ -86,7 +87,7 @@ public class ClienteServiceImp implements ClienteInterface {
     @Override
     @Transactional
     public Optional<ClienteDTO> update(Cliente cliente, String clienteId) {
-
+        try {
             //Busca cliente
             Optional<Cliente> clienteOpt = clienteRepository.findByClienteid(clienteId);
             if (clienteOpt.isPresent()) {
@@ -104,9 +105,12 @@ public class ClienteServiceImp implements ClienteInterface {
                 clienteRepository.save(existingCliente);
                 return Optional.of(ClienteDTO.build(existingCliente));
             } else {
-                throw new CustomException("Error al actualizar el cliente con ID: " + clienteId , HttpStatus.NOT_FOUND);
+                return Optional.empty(); // O lanza una excepción indicando que el cliente no fue encontrado.
             }
-
+        } catch (Exception e) {
+  
+            throw new ResourceNotFoundException("Error al actualizar el cliente con ID: " + clienteId + " - " + e.getMessage());
+        }
     }
 
     @Override

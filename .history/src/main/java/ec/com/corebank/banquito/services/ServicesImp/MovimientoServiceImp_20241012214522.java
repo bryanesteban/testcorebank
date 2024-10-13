@@ -200,18 +200,27 @@ public class MovimientoServiceImp implements MovimientoInterface {
     @Override
     @Transactional
     public void removeMovimiento(Long idMovimiento) {
-        
+        try {
             Optional<Movimiento> verificaMovimiento = movimientoRepository.findByIdmovimiento(idMovimiento);
 
             if(verificaMovimiento.isPresent()){
                 movimientoRepository.delete(verificaMovimiento.get());
             }else{
-                    throw new RuntimeException("Movimiento con numero: "+idMovimiento+",no encontrada!");
+                    throw new RuntimeException("Movimiento con numero: "+idMovimiento+"no encontrada!");
             }
 
+        } catch (Exception e) {
+
+            throw new ResourceNotFoundException("Error al eliminar el movimiento con numero: " + idMovimiento + " - " + e.getMessage());
+        }
     }
 
 
+    public static String getCurrentDate() {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
+        return today.format(formatter);
+    }
 
     
 }

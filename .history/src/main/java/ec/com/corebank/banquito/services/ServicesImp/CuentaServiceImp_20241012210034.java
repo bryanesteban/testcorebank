@@ -7,11 +7,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ec.com.corebank.banquito.ErrorManagment.CustomException;
 import ec.com.corebank.banquito.ErrorManagment.ResourceNotFoundException;
 import ec.com.corebank.banquito.models.DTO.CuentaDTO;
 import ec.com.corebank.banquito.models.entities.Cliente;
@@ -43,13 +41,16 @@ public class CuentaServiceImp implements CuentaInterface {
            
         if(cuentas == null || cuentas.size() ==0)
         {
-            throw new CustomException("Error al buscar todas las cuentas", HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("Error al buscar todas las cuentas");
         }
 
+        
+    
         return cuentas
             .stream()
             .map(u -> CuentaDTO.build(u))
             .collect(Collectors.toList());
+    
     
     }
 
@@ -59,12 +60,15 @@ public class CuentaServiceImp implements CuentaInterface {
       
         Optional<CuentaDTO> cuentaDTO;
 
-        cuentaDTO = cuentaRepository
+        try {
+            cuentaDTO = cuentaRepository
                         .findByNumerocuenta(idCuenta)
                         .map(CuentaDTO::build);
+                         
+                    
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Error al buscar la cuenta con ID: " + idCuenta + " - " + e.getMessage());
 
-        if(!cuentaDTO.isPresent()){
-            throw new CustomException("Error al buscar la cuenta con ID: " + idCuenta, HttpStatus.NOT_FOUND);
         }
 
         return cuentaDTO;
@@ -73,7 +77,7 @@ public class CuentaServiceImp implements CuentaInterface {
     @Override
     @Transactional
     public CuentaDTO saveCuenta(CuentaDTO cuentaDTO) {
-        
+        try {
             Optional <Cuenta> cuentaValidacion = cuentaRepository.findByNumerocuenta(cuentaDTO.getNumeroCuenta());
             
             Cliente cliente = clienteRepository.findByClienteid(cuentaDTO.getClienteId())
@@ -91,20 +95,22 @@ public class CuentaServiceImp implements CuentaInterface {
 
 
                 return CuentaDTO.build(cuentaRepository.save(cuenta));
-            }else{
-                throw new CustomException("Error, ya existe la cuenta ", HttpStatus.NOT_FOUND );
             }
+            return null;
+        } catch (DataIntegrityViolationException e) {
+        // Manejar violación de integridad de datos
 
-
+        throw new ResourceNotFoundException("Error de integridad de datos: " + e.getLocalizedMessage());
+        } catch (Exception e) {
             // Manejar otras excepciones
-            
-        
+            throw new ResourceNotFoundException("Error al guardar cuenta: " + e.getLocalizedMessage());
+        }
     }
 
     @Override
     @Transactional
     public Optional<CuentaDTO> updateCuenta(Cuenta cuenta, String numeroCuenta) {
-
+        try {
             Optional<Cuenta> verificaCuenta = cuentaRepository.findByNumerocuenta(numeroCuenta);
             
             if(verificaCuenta.isPresent()){
@@ -119,21 +125,26 @@ public class CuentaServiceImp implements CuentaInterface {
                 
                 return Optional.of(CuentaDTO.build(cuentaDb));
             }else {
-                throw new CustomException("Error al actualizar la cuenta con numero:"+ numeroCuenta, HttpStatus.NOT_FOUND );
+                return Optional.empty();
             }
-    }  
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Error al actualizar la cuenta con numero:"+ numeroCuenta+ " - " + e.getMessage());
+        }
+    }
 
     @Override
     @Transactional
     public void removeCuenta(String numeroCuenta) {
-        
+        try {
             Optional<Cuenta> verificaCuenta = cuentaRepository.findByNumerocuenta(numeroCuenta);
             if(verificaCuenta.isPresent()){
                 cuentaRepository.delete(verificaCuenta.get());
             }else{
-                    throw new CustomException("Cuenta con numero:"+ numeroCuenta+"no encontrada!", HttpStatus.NOT_FOUND);
+                    throw new ResourceNotFoundException("Cuenta con numero:"+ numeroCuenta+"no encontrada!");
             }
-       
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Error al eliminar la cuenta con numero: " + numeroCuenta + " - " + e.getMessage());
+        }
     }
 
     
